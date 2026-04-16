@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.env
+*.pyc
+
+# Database (jika ada file db lokal)
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Flask session
+flask_session/
+
+# Backup files
+*.bak
+*.sql
+
+# Folder frontend node_modules (jika pakai npm, meski tidak ada)
+node_modules/
+
+# File konfigurasi lokal
+config_local.py
