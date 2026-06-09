@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLISIA — Riwayat Analisis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/riwayat.css">
+</head>
+<body>
+
+<!-- HEADER (SAMA PERSIS) -->
+<header class="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="logo">
+                <i class="fas fa-apple-alt"></i>
+                GLISIA
+                <span class="badge-expert">EXPERT SYSTEM</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="konsultasi.html">Konsultasi</a>
+                <a href="edukasi.html">Edukasi</a>
+                <a href="riwayat.html" class="active">Riwayat</a>
+            </nav>
+            <div class="header__actions">
+                <div id="guestMenu">
+                    <button class="btn btn--outline" id="btnLogin">Login</button>
+                </div>
+                <div id="userMenu" style="display:none;">
+                    <div class="user-dropdown">
+                        <button class="btn btn--outline" id="userDropdownBtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="userName"></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
+                            <a href="#" id="adminPanelLink" style="display:none;"><i class="fas fa-cog"></i> Admin Panel</a>
+                            <hr>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="rw-page">
+        <!-- Hero -->
+        <div class="rw-hero">
+            <div class="rw-hero__bg"></div>
+            <div class="container">
+                <div class="rw-hero__inner">
+                    <div class="rw-hero__text">
+                        <p class="rw-hero__label"><i class="fas fa-history"></i> Pantau perkembangan Anda</p>
+                        <h1 class="rw-hero__title">Riwayat<br><span>Analisis</span></h1>
+                        <p class="rw-hero__sub">Lihat tren kesehatan metabolik, tren risiko gula, dan rekomendasi dari waktu ke waktu.</p>
+                    </div>
+                    <div class="rw-hero__cta">
+                        <a href="konsultasi.html" class="btn btn--primary">
+                            <i class="fas fa-stethoscope"></i> Konsultasi Baru
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container rw-body">
+            <!-- Stat Cards -->
+            <div class="rw-stats" id="statsSection">
+                <div class="rw-stat-card rw-stat-card--blue">
+                    <div class="rw-stat-card__icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="rw-stat-card__body">
+                        <p class="rw-stat-card__label">Total Analisis</p>
+                        <div class="rw-stat-card__value" id="statTotal">—</div>
+                        <p class="rw-stat-card__sub">sesi konsultasi</p>
+                    </div>
+                </div>
+                <div class="rw-stat-card rw-stat-card--teal">
+                    <div class="rw-stat-card__icon"><i class="fas fa-weight-scale"></i></div>
+                    <div class="rw-stat-card__body">
+                        <p class="rw-stat-card__label">BMI Rata-rata</p>
+                        <div class="rw-stat-card__value" id="statBmi">—</div>
+                        <p class="rw-stat-card__sub" id="statBmiCat">—</p>
+                    </div>
+                </div>
+                <div class="rw-stat-card rw-stat-card--amber">
+                    <div class="rw-stat-card__icon"><i class="fas fa-fire"></i></div>
+                    <div class="rw-stat-card__body">
+                        <p class="rw-stat-card__label">Kalori Rata-rata</p>
+                        <div class="rw-stat-card__value" id="statKalori">—</div>
+                        <p class="rw-stat-card__sub">kkal / hari</p>
+                    </div>
+                </div>
+                <div class="rw-stat-card rw-stat-card--red">
+                    <div class="rw-stat-card__icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="rw-stat-card__body">
+                        <p class="rw-stat-card__label">Risiko Terakhir</p>
+                        <div class="rw-stat-card__value" id="statRisk">—</div>
+                        <p class="rw-stat-card__sub" id="statRiskDate">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── TOOLBAR dengan FILTER & SORTING (TAMBAHAN) ── -->
+            <div class="rw-toolbar">
+                <div class="rw-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari tanggal, risiko, atau faktor…">
+                    <button class="rw-search__clear" id="clearSearch" style="display:none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- FILTER GROUP -->
+                <div class="rw-filter-group">
+                    <select id="sortSelect" class="rw-filter-select">
+                        <option value="terbaru">Terbaru</option>
+                        <option value="terlama">Terlama</option>
+                        <option value="bmi_tertinggi">BMI Tertinggi</option>
+                        <option value="bmi_terendah">BMI Terendah</option>
+                        <option value="risiko_tertinggi">Risiko Tertinggi</option>
+                        <option value="risiko_terendah">Risiko Terendah</option>
+                    </select>
+                    <select id="riskFilter" class="rw-filter-select">
+                        <option value="semua">Semua Risiko</option>
+                        <option value="Tinggi">Tinggi</option>
+                        <option value="Sedang">Sedang</option>
+                        <option value="Rendah">Rendah</option>
+                    </select>
+                    <button id="applyFilterBtn" class="rw-filter-btn">
+                        <i class="fas fa-filter"></i> Terapkan
+                    </button>
+                </div>
+
+                <!-- TOOLBAR RIGHT: tombol hapus semua & jumlah data -->
+                <div class="rw-toolbar__right">
+                    <button id="deleteAllBtn" class="btn btn--danger" style="margin-right: 12px; padding: 6px 12px;">
+                        <i class="fas fa-trash-alt"></i> Hapus Semua
+                    </button>
+                    <span class="rw-count" id="recordCount">— data</span>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat -->
+            <div class="rw-table-wrap">
+                <table class="rw-table" id="riwayatTable">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>BMI</th>
+                            <th>Kalori vs TDEE</th>
+                            <th>Faktor Utama</th>
+                            <th>Status Risiko</th>
+                            <th>Tren</th>
+                            <th class="th-aksi">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riwayatBody">
+                        <tr><td colspan="7" class="rw-loading"><div class="rw-spinner"></div> Memuat data riwayat…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="rw-pagination" id="pagination">
+                <button class="rw-page-btn" id="prevPage" disabled><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+                <div class="rw-page-numbers" id="pageNumbers"></div>
+                <button class="rw-page-btn" id="nextPage">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <!-- Empty State -->
+            <div class="rw-empty" id="emptyState" style="display:none;">
+                <div class="rw-empty__icon"><i class="fas fa-folder-open"></i></div>
+                <h3>Belum Ada Riwayat</h3>
+                <p>Mulai konsultasi pertama Anda untuk melihat analisis di sini.</p>
+                <a href="konsultasi.html" class="btn btn--primary"><i class="fas fa-stethoscope"></i> Mulai Konsultasi</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER (SAMA PERSIS) -->
+<footer class="footer">
+    <div class="container footer-inner">
+        <div class="footer-col">
+            <h4>LAYANAN</h4>
+            <ul><li>Konsultasi Risiko</li><li>Edukasi Gizi</li><li>Riwayat Analisis</li></ul>
+        </div>
+        <div class="footer-col">
+            <h4>INFORMASI</h4>
+            <ul><li>Tentang GLISIA</li><li>Panduan Penggunaan</li><li>FAQ</li><li>Kebijakan Privasi</li></ul>
+        </div>
+        <div class="footer-col">
+            <h4>KONTAK</h4>
+            <ul>
+                <li><i class="fas fa-envelope"></i> support@glisia.id</li>
+                <li><i class="fas fa-phone"></i> (021) 555-0123</li>
+                <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 GLISIA. All rights reserved. Powered by Forward Chaining Expert System.</p>
+    </div>
+</footer>
+
+<!-- MODAL DETAIL (SAMA PERSIS) -->
+<div class="rw-modal-overlay" id="modalOverlay">
+    <div class="rw-modal" id="detailModal">
+        <button class="rw-modal__close" id="closeModal"><i class="fas fa-times"></i></button>
+        <div class="rw-modal__header">
+            <div class="rw-modal__header-left">
+                <span class="rw-modal__date" id="modalDate">—</span>
+                <h2 class="rw-modal__title">Detail Analisis</h2>
+            </div>
+            <div class="rw-modal__risk-badge" id="modalRiskBadge">—</div>
+        </div>
+        <div class="rw-modal__tabs">
+            <button class="rw-tab active" data-tab="ringkasan"><i class="fas fa-user"></i> Ringkasan</button>
+            <button class="rw-tab" data-tab="asupan"><i class="fas fa-utensils"></i> Asupan & TDEE</button>
+            <button class="rw-tab" data-tab="rekomendasi"><i class="fas fa-clipboard-list"></i> Rekomendasi</button>
+            <button class="rw-tab" data-tab="trace"><i class="fas fa-code-branch"></i> Trace Sistem</button>
+        </div>
+        <div class="rw-modal__body">
+            <!-- Ringkasan -->
+            <div class="rw-tab-content active" id="tab-ringkasan">
+                <div class="rw-detail-grid">
+                    <div class="rw-detail-block"><p class="rw-detail-block__label"><i class="fas fa-weight-scale"></i> Berat Badan</p><p class="rw-detail-block__val" id="dWeight">—</p></div>
+                    <div class="rw-detail-block"><p class="rw-detail-block__label"><i class="fas fa-ruler-vertical"></i> Tinggi Badan</p><p class="rw-detail-block__val" id="dHeight">—</p></div>
+                    <div class="rw-detail-block"><p class="rw-detail-block__label"><i class="fas fa-birthday-cake"></i> Usia</p><p class="rw-detail-block__val" id="dUsia">—</p></div>
+                    <div class="rw-detail-block"><p class="rw-detail-block__label"><i class="fas fa-venus-mars"></i> Jenis Kelamin</p><p class="rw-detail-block__val" id="dGender">—</p></div>
+                    <div class="rw-detail-block rw-detail-block--wide">
+                        <p class="rw-detail-block__label"><i class="fas fa-calculator"></i> Indeks Massa Tubuh (BMI)</p>
+                        <div class="rw-bmi-bar-wrap">
+                            <div class="rw-bmi-value" id="dBmiVal">—</div>
+                            <div class="rw-bmi-bar">
+                                <div class="rw-bmi-bar__fill" id="dBmiBar"></div>
+                                <div class="rw-bmi-bar__marker" id="dBmiMarker"></div>
+                            </div>
+                            <div class="rw-bmi-labels"><span>Kurang</span><span>Normal</span><span>Overweight</span><span>Obesitas</span></div>
+                        </div>
+                    </div>
+                    <div class="rw-detail-block rw-detail-block--wide"><p class="rw-detail-block__label"><i class="fas fa-running"></i> Aktivitas Fisik</p><p class="rw-detail-block__val" id="dAktivitas">—</p></div>
+                </div>
+                <div class="rw-explanation"><h4><i class="fas fa-lightbulb"></i> Penjelasan Sistem</h4><p id="dExplanation">—</p></div>
+            </div>
+            <!-- Asupan & TDEE -->
+            <div class="rw-tab-content" id="tab-asupan">
+                <div class="rw-asupan-comparison">
+                    <div class="rw-asupan-col"><p class="rw-asupan-col__label">Asupan Kalori</p><div class="rw-asupan-col__val" id="dKalori">—</div><p class="rw-asupan-col__unit">kkal / hari</p></div>
+                    <div class="rw-asupan-vs"><div class="rw-surplus-badge" id="dSurplusBadge">—</div><p>vs TDEE</p></div>
+                    <div class="rw-asupan-col"><p class="rw-asupan-col__label">TDEE Anda</p><div class="rw-asupan-col__val" id="dTdee">—</div><p class="rw-asupan-col__unit">kkal / hari</p></div>
+                </div>
+                <div class="rw-makro-section">
+                    <h4>Komposisi Makronutrien</h4>
+                    <div class="rw-makro-item"><div class="rw-makro-item__head"><span><i class="fas fa-droplet"></i> Lemak</span><span id="dLemak">—</span></div><div class="rw-makro-bar"><div class="rw-makro-bar__fill rw-makro-bar__fill--lemak" id="dLemakBar"></div></div></div>
+                    <div class="rw-makro-item"><div class="rw-makro-item__head"><span><i class="fas fa-bread-slice"></i> Karbohidrat</span><span id="dKarbo">—</span></div><div class="rw-makro-bar"><div class="rw-makro-bar__fill rw-makro-bar__fill--karbo" id="dKarboBar"></div></div></div>
+                </div>
+                <div class="rw-aktivitas-detail">
+                    <div class="rw-aktivitas-card"><i class="fas fa-dumbbell"></i><div><p class="rw-aktivitas-card__label">Durasi Aktivitas</p><p class="rw-aktivitas-card__val" id="dMenit">—</p></div></div>
+                    <div class="rw-aktivitas-card"><i class="fas fa-gauge-high"></i><div><p class="rw-aktivitas-card__label">Intensitas</p><p class="rw-aktivitas-card__val" id="dIntensitas">—</p></div></div>
+                </div>
+            </div>
+            <!-- Rekomendasi -->
+            <div class="rw-tab-content" id="tab-rekomendasi">
+                <div class="rw-rekom-list" id="dRekomendasi"><p class="rw-empty-tab">Tidak ada rekomendasi tersedia.</p></div>
+                <div class="rw-edukasi-section" id="dEdukasiWrap" style="display:none;"><h4><i class="fas fa-book-open"></i> Materi Edukasi Terkait</h4><div class="rw-edukasi-list" id="dEdukasi"></div></div>
+            </div>
+            <!-- Trace -->
+            <div class="rw-tab-content" id="tab-trace">
+                <div class="rw-trace-info"><i class="fas fa-info-circle"></i> Berikut adalah jejak inferensi <strong>Forward Chaining</strong> yang digunakan sistem untuk menyimpulkan tingkat risiko Anda.</div>
+                <div class="rw-trace-list" id="dTrace"><p class="rw-empty-tab">Tidak ada trace tersedia.</p></div>
+            </div>
+        </div>
+        <div class="rw-modal__footer">
+            <button class="btn btn--ghost" id="modalDeleteBtn"><i class="fas fa-trash"></i> Hapus Data</button>
+            <button class="btn btn--primary" id="modalCloseBtn">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Delete Dialog -->
+<div class="rw-confirm-overlay" id="confirmOverlay">
+    <div class="rw-confirm">
+        <div class="rw-confirm__icon"><i class="fas fa-triangle-exclamation"></i></div>
+        <h3>Hapus Data Ini?</h3>
+        <p>Tindakan ini tidak dapat dibatalkan. Data analisis akan dihapus permanen.</p>
+        <div class="rw-confirm__btns">
+            <button class="btn btn--ghost" id="confirmCancel">Batal</button>
+            <button class="btn btn--danger" id="confirmDelete">Ya, Hapus</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/riwayat.js"></script>
+</body>
+</html>

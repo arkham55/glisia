@@ -5,14 +5,13 @@ makanan_bp = Blueprint('makanan', __name__)
 
 @makanan_bp.route('/api/makanan', methods=['GET'])
 def cari_makanan():
-    """Endpoint untuk mencari makanan/minuman berdasarkan nama (query parameter ?q=...)"""
     query = request.args.get('q', '')
     if not query:
         return jsonify({'status': 'error', 'message': 'Parameter q diperlukan'}), 400
     
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    sql = "SELECT id, nama, kategori, gula_gram, satuan FROM makanan WHERE nama LIKE %s LIMIT 20"
+    sql = "SELECT id, name, calories, fat, carbohydrate FROM foods WHERE name LIKE %s LIMIT 50"
     cursor.execute(sql, (f'%{query}%',))
     results = cursor.fetchall()
     cursor.close()
@@ -20,9 +19,8 @@ def cari_makanan():
     
     return jsonify({'status': 'success', 'data': results})
 
-@makanan_bp.route('/api/hitung-gula', methods=['POST'])
-def hitung_gula():
-    """Endpoint untuk menghitung total gula dari daftar makanan yang dipilih (items: [{id, jumlah}])"""
+@makanan_bp.route('/api/hitung-nutrisi', methods=['POST'])
+def hitung_nutrisi():
     data = request.get_json()
     items = data.get('items', [])
     if not items:
@@ -30,29 +28,42 @@ def hitung_gula():
     
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    total = 0
-    rincian = []
+    total_kalori = 0.0
+    total_lemak = 0.0
+    total_karbohidrat = 0.0
+    
     for item in items:
-        cursor.execute("SELECT id, nama, gula_gram, satuan FROM makanan WHERE id = %s", (item['id'],))
-        makanan = cursor.fetchone()
-        if makanan:
-            jumlah = item.get('jumlah', 1)
-            subtotal = makanan['gula_gram'] * jumlah
-            total += subtotal
-            rincian.append({
-                'id': makanan['id'],
-                'nama': makanan['nama'],
-                'gula_gram': subtotal,
-                'jumlah': jumlah,
-                'satuan': makanan['satuan']
-            })
+        food_id = item.get('id')
+        gram = item.get('gram', 100)
+        cursor.execute("SELECT calories, fat, carbohydrate FROM foods WHERE id = %s", (food_id,))
+        food = cursor.fetchone()
+        if food:
+            faktor = gram / 100.0
+            total_kalori += food['calories'] * faktor
+            total_lemak += food['fat'] * faktor
+            total_karbohidrat += food['carbohydrate'] * faktor
+    
     cursor.close()
     conn.close()
     
     return jsonify({
         'status': 'success',
         'data': {
-            'total_gula_gram': total,
-            'rincian': rincian
+            'total_calories': round(total_kalori, 2),
+            'total_fat': round(total_lemak, 2),
+            'total_carbohydrate': round(total_karbohidrat, 2)
         }
     })
+
+@makanan_bp.route('/api/makanan/populer', methods=['GET'])
+def makanan_populer():
+    """Ambil 8 makanan/minuman secara acak untuk quick add di landing page."""
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    # Mengambil 8 data acak (ORDER BY RAND())
+    # Jika ingin data tetap (misal 8 pertama), ganti dengan ORDER BY id LIMIT 8
+    cursor.execute("SELECT id, name, calories, fat, carbohydrate FROM foods ORDER BY RAND() LIMIT 8")
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify({'status': 'success', 'data': results})

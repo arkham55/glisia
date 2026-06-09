@@ -3,212 +3,235 @@
     {
       "id": 1,
       "priority": 1,
-      "conditions": {
-        "gula_harian": "tinggi",
-        "karbohidrat": "tinggi",
-        "aktivitas": "ringan"
-      },
+      "conditions": { "bmi": "obesitas", "kalori": "tinggi", "lemak": "tinggi" },
       "conclusion": "tinggi",
-      "explanation": "Konsumsi gula dan karbohidrat tinggi dengan aktivitas fisik ringan meningkatkan risiko lonjakan glukosa dan resistensi insulin secara signifikan."
+      "explanation": "Obesitas dengan kelebihan kalori dan lemak tinggi ( >35% energi) meningkatkan risiko sindrom metabolik, diabetes tipe 2, dan penyakit jantung secara signifikan. Sumber: WHO, AHA."
     },
     {
       "id": 2,
       "priority": 1,
-      "conditions": {
-        "gula_harian": "tinggi",
-        "lemak": "tinggi",
-        "bmi": "obesitas"
-      },
+      "conditions": { "bmi": "obesitas", "kalori": "tinggi", "karbohidrat": "tinggi" },
       "conclusion": "tinggi",
-      "explanation": "Kombinasi gula tinggi, lemak tinggi, dan obesitas sangat berbahaya, memicu diabetes tipe 2 dan penyakit kardiovaskular."
+      "explanation": "Obesitas dan kelebihan kalori serta karbohidrat ( >65% energi) menyebabkan lonjakan gula darah, resistensi insulin, dan risiko diabetes. Sumber: The Lancet."
     },
     {
       "id": 3,
       "priority": 1,
-      "conditions": {
-        "karbohidrat": "tinggi",
-        "lemak": "tinggi",
-        "aktivitas": "ringan"
-      },
+      "conditions": { "bmi": "obesitas", "lemak": "tinggi", "aktivitas": "ringan" },
       "conclusion": "tinggi",
-      "explanation": "Asupan karbohidrat dan lemak tinggi dengan minim aktivitas fisik menyebabkan akumulasi glukosa dan lemak tubuh, resistensi insulin parah."
+      "explanation": "Obesitas, asupan lemak tinggi, dan aktivitas fisik rendah sangat meningkatkan risiko kardiometabolik. Rekomendasi: tingkatkan aktivitas minimal 150 menit/minggu. Sumber: WHO 2020."
     },
     {
       "id": 4,
       "priority": 1,
-      "conditions": {
-        "frekuensi_minuman": "sering",
-        "gula_harian": "tinggi",
-        "bmi": "obesitas"
-      },
+      "conditions": { "bmi": "overweight", "kalori": "tinggi", "lemak": "tinggi", "aktivitas": "ringan" },
       "conclusion": "tinggi",
-      "explanation": "Minum manis 2+ kali per hari ditambah asupan gula total tinggi dan obesitas meningkatkan risiko diabetes melitus tipe 2 sangat tinggi."
+      "explanation": "Overweight dengan kelebihan kalori, lemak tinggi, dan kurang gerak mempercepat sindrom metabolik. Sumber: Kemenkes RI."
     },
     {
       "id": 5,
       "priority": 1,
-      "conditions": {
-        "gula_harian": "tinggi",
-        "karbohidrat": "tinggi",
-        "lemak": "tinggi",
-        "aktivitas": "ringan"
-      },
+      "conditions": { "bmi": "overweight", "karbohidrat": "tinggi", "aktivitas": "ringan" },
       "conclusion": "tinggi",
-      "explanation": "Pola konsumsi sangat tidak sehat (gula, karbo, lemak tinggi) dan kurang gerak. Segera konsultasi ke tenaga kesehatan."
+      "explanation": "Karbohidrat berlebih ( >65% energi) dan kurang aktivitas pada overweight meningkatkan resistensi insulin. Sumber: American Diabetes Association."
     },
     {
       "id": 6,
+      "priority": 1,
+      "conditions": { "bmi": "underweight", "kalori": "rendah", "aktivitas": "berat" },
+      "conclusion": "tinggi",
+      "explanation": "Underweight dengan defisit kalori ( <80% TDEE) dan aktivitas berat berisiko malnutrisi, defisiensi energi, dan gangguan imun. Sumber: ESPEN guidelines 2022."
+    },
+    {
+      "id": 19,
+      "priority": 1,
+      "conditions": { "bmi": "obesitas", "lemak": "tinggi", "kalori": "tinggi", "aktivitas": "ringan" },
+      "conclusion": "tinggi",
+      "explanation": "Kombinasi paling berbahaya: obesitas, kelebihan kalori, lemak tinggi, dan kurang gerak. Risiko sangat tinggi untuk penyakit jantung, stroke, diabetes. Segera konsultasi medis."
+    },
+    {
+      "id": 33,
       "priority": 2,
-      "conditions": {
-        "gula_harian": "tinggi",
-        "aktivitas": "sedang"
-      },
-      "conclusion": "sedang",
-      "explanation": "Konsumsi gula tinggi namun aktivitas fisik cukup membantu membakar glukosa. Tetap kurangi gula."
+      "conditions": { "bmi": "obesitas", "kalori": "cukup", "aktivitas": "ringan" },
+      "conclusion": "tinggi",
+      "explanation": "Obesitas dengan asupan kalori cukup namun kurang gerak tetap berisiko tinggi. Perlu peningkatan aktivitas fisik."
     },
     {
       "id": 7,
       "priority": 2,
-      "conditions": {
-        "gula_harian": "tinggi",
-        "aktivitas": "berat"
-      },
+      "conditions": { "bmi": "obesitas", "kalori": "cukup", "lemak": "cukup", "aktivitas": "sedang" },
       "conclusion": "sedang",
-      "explanation": "Meskipun aktif berolahraga, asupan gula tinggi tetap berisiko jangka panjang. Batasi gula tambahan."
-    },
-    {
-      "id": 8,
-      "priority": 2,
-      "conditions": {
-        "karbohidrat": "tinggi",
-        "lemak": "sedang",
-        "aktivitas": "ringan"
-      },
-      "conclusion": "sedang",
-      "explanation": "Karbohidrat berlebih dengan sedikit gerak dapat menyebabkan fluktuasi gula darah. Tingkatkan aktivitas."
-    },
-    {
-      "id": 9,
-      "priority": 2,
-      "conditions": {
-        "bmi": "obesitas",
-        "gula_harian": "rendah",
-        "lemak": "rendah"
-      },
-      "conclusion": "sedang",
-      "explanation": "Meskipun asupan gula dan lemak rendah, obesitas tetap menjadi faktor risiko metabolik. Perbanyak aktivitas fisik."
-    },
-    {
-      "id": 10,
-      "priority": 2,
-      "conditions": {
-        "frekuensi_minuman": "sering",
-        "aktivitas": "ringan"
-      },
-      "conclusion": "sedang",
-      "explanation": "Minuman manis sering (≥2x/hari) dikombinasi kurang gerak meningkatkan risiko resistensi insulin. Kurangi minuman manis."
-    },
-    {
-      "id": 11,
-      "priority": 2,
-      "conditions": {
-        "gula_harian": "sedang",
-        "karbohidrat": "sedang",
-        "lemak": "sedang"
-      },
-      "conclusion": "sedang",
-      "explanation": "Asupan cukup tetapi perlu diwaspadai. Pastikan aktivitas fisik minimal 30 menit per hari."
-    },
-    {
-      "id": 12,
-      "priority": 3,
-      "conditions": {
-        "gula_harian": "rendah",
-        "karbohidrat": "rendah",
-        "lemak": "rendah",
-        "aktivitas": "berat",
-        "bmi": "normal"
-      },
-      "conclusion": "rendah",
-      "explanation": "Pola konsumsi dan aktivitas fisik sangat baik. Pertahankan gaya hidup sehat ini!"
-    },
-    {
-      "id": 13,
-      "priority": 3,
-      "conditions": {
-        "gula_harian": "rendah",
-        "aktivitas": "sedang",
-        "bmi": "normal"
-      },
-      "conclusion": "rendah",
-      "explanation": "Konsumsi gula terkendali, aktif bergerak, dan berat badan ideal. Risiko minimal."
-    },
-    {
-      "id": 14,
-      "priority": 3,
-      "conditions": {
-        "gula_harian": "rendah",
-        "aktivitas": "berat",
-        "bmi": "normal"
-      },
-      "conclusion": "rendah",
-      "explanation": "Sangat baik! Terus jaga asupan gula dan rutin olahraga."
-    },
-    {
-      "id": 15,
-      "priority": 3,
-      "conditions": {
-        "karbohidrat": "rendah",
-        "lemak": "rendah",
-        "aktivitas": "sedang"
-      },
-      "conclusion": "rendah",
-      "explanation": "Pola makan rendah karbo dan lemak plus aktivitas cukup menekan risiko metabolik."
-    },
-    {
-      "id": 16,
-      "priority": 2,
-      "conditions": {
-        "gula_harian": "sedang",
-        "aktivitas": "ringan",
-        "bmi": "overweight"
-      },
-      "conclusion": "sedang",
-      "explanation": "Konsumsi gula sedang dengan aktivitas ringan dan kelebihan berat badan meningkatkan risiko metabolik secara moderat. Tingkatkan aktivitas fisik dan kurangi gula."
-    },
-    {
-      "id": 17,
-      "priority": 2,
-      "conditions": {
-        "karbohidrat": "sedang",
-        "aktivitas": "ringan",
-        "bmi": "overweight"
-      },
-      "conclusion": "sedang",
-      "explanation": "Asupan karbohidrat cukup namun kurang gerak dan kelebihan berat badan menyebabkan potensi penumpukan glukosa. Perbanyak aktivitas fisik."
+      "explanation": "Obesitas meski asupan seimbang dan aktivitas sedang, tetap perlu penurunan berat badan bertahap. Sumber: Kemenkes RI."
     },
     {
       "id": 18,
       "priority": 2,
-      "conditions": {
-        "gula_harian": "sedang",
-        "karbohidrat": "sedang",
-        "aktivitas": "ringan"
-      },
+      "conditions": { "bmi": "obesitas", "kalori": "cukup", "aktivitas": "berat" },
       "conclusion": "sedang",
-      "explanation": "Asupan gula dan karbohidrat cukup tetapi kurang gerak menyebabkan fluktuasi gula darah. Tingkatkan aktivitas fisik minimal 150 menit per minggu."
+      "explanation": "Obesitas dengan asupan cukup dan aktivitas berat – risiko sedang; tetap targetkan penurunan berat badan."
     },
     {
-      "id": 19,
+      "id": 8,
       "priority": 2,
-      "conditions": {
-        "bmi": "overweight",
-        "aktivitas": "ringan"
-      },
+      "conditions": { "bmi": "overweight", "kalori": "cukup", "aktivitas": "ringan" },
       "conclusion": "sedang",
-      "explanation": "Berat badan berlebih ditambah kurang gerak meningkatkan risiko resistensi insulin. Mulai olahraga teratur dan jaga pola makan."
+      "explanation": "Overweight dengan asupan cukup tetapi kurang gerak – tingkatkan aktivitas minimal 150 menit/minggu. Sumber: WHO."
+    },
+    {
+      "id": 16,
+      "priority": 3,
+      "conditions": { "bmi": "overweight", "kalori": "cukup", "lemak": "cukup", "karbohidrat": "cukup", "aktivitas": "berat" },
+      "conclusion": "sedang",
+      "explanation": "Overweight namun asupan seimbang dan aktivitas berat – risiko sedang, fokus pada penurunan berat badan bertahap (0.5-1 kg/minggu)."
+    },
+    {
+      "id": 32,
+      "priority": 2,
+      "conditions": { "bmi": "overweight", "kalori": "cukup", "lemak": "cukup", "karbohidrat": "cukup", "aktivitas": "sedang" },
+      "conclusion": "sedang",
+      "explanation": "Overweight dengan asupan seimbang dan aktivitas sedang, risiko sedang. Fokus pada penurunan berat badan bertahap."
+    },
+    {
+      "id": 9,
+      "priority": 2,
+      "conditions": { "bmi": "normal", "kalori": "tinggi", "aktivitas": "ringan" },
+      "conclusion": "sedang",
+      "explanation": "BMI normal namun kelebihan kalori dan kurang gerak dapat menyebabkan peningkatan berat badan di masa depan. Perbaiki pola makan."
+    },
+    {
+      "id": 10,
+      "priority": 2,
+      "conditions": { "bmi": "normal", "lemak": "tinggi", "aktivitas": "ringan" },
+      "conclusion": "sedang",
+      "explanation": "Lemak tinggi ( >35% energi) meski BMI normal tetap berisiko dislipidemia. Batasi lemak jenuh."
+    },
+    {
+      "id": 25,
+      "priority": 2,
+      "conditions": { "bmi": "normal", "kalori": "rendah", "aktivitas": "berat" },
+      "conclusion": "sedang",
+      "explanation": "BMI normal namun asupan kalori kurang dari kebutuhan dan aktivitas berat dapat menyebabkan defisit energi, kelelahan, dan risiko gangguan metabolik. Tingkatkan asupan kalori."
+    },
+    {
+      "id": 28,
+      "priority": 2,
+      "conditions": { "bmi": "normal", "kalori": "tinggi", "aktivitas": "berat" },
+      "conclusion": "sedang",
+      "explanation": "BMI normal dengan kelebihan kalori namun aktivitas berat dapat membantu menyeimbangkan energi. Namun tetap waspadai potensi kenaikan berat badan jika asupan terus berlebih."
+    },
+    {
+      "id": 11,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "cukup", "aktivitas": "berat" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan asupan cukup namun aktivitas berat, perlu tambahan kalori untuk mengejar kebutuhan energi. Sumber: ESPEN."
+    },
+    {
+      "id": 12,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "tinggi", "aktivitas": "ringan" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan kalori tinggi dan aktivitas ringan – kelebihan kalori dapat membantu kenaikan berat badan, namun pastikan sumber gizi seimbang."
+    },
+    {
+      "id": 17,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "rendah", "aktivitas": "ringan" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan defisit kalori dan aktivitas ringan – risiko kurang energi, perbanyak makan padat nutrisi."
+    },
+    {
+      "id": 29,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "cukup", "aktivitas": "sedang" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan asupan kalori cukup namun aktivitas sedang membutuhkan tambahan energi untuk mengejar kebutuhan, agar berat badan dapat naik."
+    },
+    {
+      "id": 30,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "rendah", "aktivitas": "sedang" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan defisit kalori dan aktivitas sedang berisiko kekurangan energi, namun tidak separah aktivitas berat. Perbanyak asupan kalori."
+    },
+    {
+      "id": 31,
+      "priority": 2,
+      "conditions": { "bmi": "underweight", "kalori": "tinggi", "aktivitas": "sedang" },
+      "conclusion": "sedang",
+      "explanation": "Underweight dengan kelebihan kalori dan aktivitas sedang – kelebihan kalori dapat digunakan untuk menambah berat badan, namun pastikan aktivitas tidak berlebihan."
+    },
+    {
+      "id": 13,
+      "priority": 3,
+      "conditions": { "bmi": "normal", "kalori": "cukup", "lemak": "cukup", "karbohidrat": "cukup", "aktivitas": "sedang" },
+      "conclusion": "rendah",
+      "explanation": "Profil metabolik sehat: BMI normal, asupan kalori seimbang (80-120% TDEE), lemak 20-35% energi, karbohidrat 45-65% energi, aktivitas fisik teratur 150-300 menit/minggu. Pertahankan gaya hidup ini. Sumber: WHO, Kemenkes RI."
+    },
+    {
+      "id": 14,
+      "priority": 3,
+      "conditions": { "bmi": "normal", "kalori": "cukup", "aktivitas": "berat" },
+      "conclusion": "rendah",
+      "explanation": "BMI normal, asupan seimbang, dan aktivitas berat – sangat baik untuk kesehatan kardiovaskular. Terus jaga."
+    },
+    {
+      "id": 15,
+      "priority": 3,
+      "conditions": { "bmi": "normal", "kalori": "cukup", "lemak": "rendah", "karbohidrat": "rendah", "aktivitas": "sedang" },
+      "conclusion": "rendah",
+      "explanation": "Pola makan rendah lemak dan rendah karbohidrat (namun asupan kalori cukup) dengan aktivitas sedang masih tergolong sehat, selama tidak defisit mikronutrien."
+    },
+    {
+      "id": 20,
+      "priority": 3,
+      "conditions": { "bmi": "underweight", "kalori": "cukup", "lemak": "cukup", "karbohidrat": "cukup", "aktivitas": "ringan" },
+      "conclusion": "rendah",
+      "explanation": "Meskipun underweight, asupan gizi seimbang dan aktivitas rendah – risiko metabolik rendah, namun perlu menaikkan berat badan secara sehat (tambah 300-500 kkal/hari)."
+    },
+    {
+      "id": 26,
+      "priority": 3,
+      "conditions": { "bmi": "normal", "kalori": "rendah", "aktivitas": "ringan" },
+      "conclusion": "rendah",
+      "explanation": "BMI normal dengan defisit kalori ringan dan aktivitas ringan masih tergolong aman, namun perlu dipantau agar tidak terjadi penurunan berat badan berlebih."
+    },
+    {
+      "id": 27,
+      "priority": 3,
+      "conditions": { "bmi": "normal", "kalori": "rendah", "aktivitas": "sedang" },
+      "conclusion": "rendah",
+      "explanation": "BMI normal dengan defisit kalori dan aktivitas sedang, risiko rendah selama defisit tidak ekstrem. Pastikan nutrisi tercukupi."
+    },
+    {
+      "id": 21,
+      "priority": 10,
+      "conditions": { "bmi": "underweight" },
+      "conclusion": "sedang",
+      "explanation": "Berat badan kurang (underweight). Perhatikan asupan nutrisi untuk mencapai berat badan ideal dan konsultasikan dengan ahli gizi."
+    },
+    {
+      "id": 22,
+      "priority": 10,
+      "conditions": { "bmi": "normal" },
+      "conclusion": "sedang",
+      "explanation": "Indeks Massa Tubuh normal. Pertahankan pola makan seimbang, perbanyak aktivitas fisik, dan lakukan pemeriksaan kesehatan berkala."
+    },
+    {
+      "id": 23,
+      "priority": 10,
+      "conditions": { "bmi": "overweight" },
+      "conclusion": "sedang",
+      "explanation": "Berat badan lebih (overweight). Lakukan diet sehat dengan defisit kalori terkontrol dan tingkatkan aktivitas fisik secara teratur."
+    },
+    {
+      "id": 24,
+      "priority": 10,
+      "conditions": { "bmi": "obesitas" },
+      "conclusion": "tinggi",
+      "explanation": "Obesitas meningkatkan risiko metabolik serius seperti diabetes tipe 2, penyakit jantung, dan sindrom metabolik. Segera konsultasi ke dokter atau ahli gizi."
     }
   ],
   "default_conclusion": "sedang",
-  "default_explanation": "Berdasarkan data yang diberikan, tidak ada pola ekstrem. Tetap pantau konsumsi gula harian dan perbanyak aktivitas fisik."
+  "default_explanation": "Berdasarkan data yang diberikan, tidak ditemukan pola risiko ekstrem. Tetap pantau asupan kalori, lemak, karbohidrat, dan penuhi rekomendasi aktivitas fisik (150-300 menit/minggu aktivitas sedang)."
 }

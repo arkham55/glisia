@@ -1,24 +1,22 @@
-# engine/__init__.py
-
 from .inference_engine import GlisiaInferenceEngine
 from .categorizers import (
     calculate_bmi_category,
-    categorize_gula_harian,
-    categorize_frekuensi_minuman_manis,
-    categorize_karbohidrat,
-    categorize_lemak,
+    hitung_tdee,
+    kategorikan_kalori,
+    kategorikan_lemak,
+    kategorikan_karbohidrat,
     categorize_aktivitas,
-    analyze_risk,          # <-- pastikan ini ada
+    analyze_risk,
     generate_recommendations
 )
 
 __all__ = [
     "GlisiaInferenceEngine",
     "calculate_bmi_category",
-    "categorize_gula_harian",
-    "categorize_frekuensi_minuman_manis",
-    "categorize_karbohidrat",
-    "categorize_lemak",
+    "hitung_tdee",
+    "kategorikan_kalori",
+    "kategorikan_lemak",
+    "kategorikan_karbohidrat",
     "categorize_aktivitas",
     "analyze_risk",
     "generate_recommendations"

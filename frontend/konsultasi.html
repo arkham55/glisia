@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GLISIA - Konsultasi Risiko Metabolik</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/konsultasi.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <div class="logo"><i class="fas fa-apple-alt"></i> GLISIA <span class="badge-expert">EXPERT SYSTEM</span></div>
+                <nav class="nav">
+                    <a href="index.html">Beranda</a>
+                    <a href="konsultasi.html" class="active">Konsultasi</a>
+                    <a href="edukasi.html">Edukasi</a>
+                    <a href="riwayat.html">Riwayat</a>
+                </nav>
+                <div class="header__actions">
+                    <div id="guestMenu">
+                        <button class="btn btn--outline" id="btnLogin">Login</button>
+                    </div>
+                    <div id="userMenu" style="display: none;">
+                        <div class="user-dropdown">
+                            <button class="btn btn--outline" id="userDropdownBtn">
+                                <i class="fas fa-user-circle"></i> <span id="userName"></span> <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
+                                <a href="#" id="adminPanelLink" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</a>
+                                <hr>
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tombol Simpan Riwayat telah dihapus -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container konsultasi-container">
+            <div class="konsultasi-grid">
+                <!-- Kolom Kiri: Form Progress -->
+                <div class="konsultasi-left">
+                    <div class="progress-indicator">
+                        <div class="step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <span>Data Tubuh</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <span>Pola Konsumsi</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <span>Aktivitas</span>
+                        </div>
+                    </div>
+
+                    <form id="consultationForm" novalidate>
+                        <!-- Step 1: Data Tubuh & Demografi -->
+                        <div class="form-step active" id="step1">
+                            <div class="step-header">
+                                <h2><i class="fas fa-user-md"></i> Data Diri & Pengukuran Tubuh</h2>
+                                <p>Isi data untuk menghitung Indeks Massa Tubuh (BMI) dan kebutuhan kalori harian.</p>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-weight-scale"></i> Berat Badan (kg)</label>
+                                <input type="number" id="weight" step="0.1" placeholder="Contoh: 70">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-ruler"></i> Tinggi Badan (cm)</label>
+                                <input type="number" id="height" step="0.1" placeholder="Contoh: 170">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar-alt"></i> Usia (tahun)</label>
+                                <input type="number" id="usia" step="1" placeholder="Contoh: 25">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="jenis_kelamin" value="pria" checked> Pria</label>
+                                    <label><input type="radio" name="jenis_kelamin" value="wanita"> Wanita</label>
+                                </div>
+                            </div>
+                            <div class="step-buttons">
+                                <button type="button" class="btn-next" data-next="2">Lanjutkan <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Pola Konsumsi -->
+                        <div class="form-step" id="step2">
+                            <div class="step-header">
+                                <h2><i class="fas fa-utensils"></i> Pola Konsumsi Harian</h2>
+                                <p>Informasi asupan kalori, lemak, dan karbohidrat untuk analisis risiko metabolik.</p>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-chart-line"></i> Total Kalori Harian (kkal)</label>
+                                <input type="number" id="calories" step="50" placeholder="Contoh: 2100">
+                                <small class="helper">💡 Bisa diisi manual atau gunakan <button type="button" id="openFoodSearchBtn" class="link-btn">Kalkulator Kalori & Lemak</button></small>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-oil-can"></i> Total Lemak Harian (gram)</label>
+                                <input type="number" id="fat_harian" step="1" placeholder="Contoh: 60">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-bread-slice"></i> Total Karbohidrat Harian (gram)</label>
+                                <input type="number" id="carbo_harian" step="1" placeholder="Contoh: 250">
+                                <small class="helper">Sumber karbohidrat kompleks lebih baik untuk kesehatan.</small>
+                            </div>
+                            <div class="step-buttons">
+                                <button type="button" class="btn-prev" data-prev="1"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                                <button type="button" class="btn-next" data-next="3">Lanjutkan <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Aktivitas -->
+                        <div class="form-step" id="step3">
+                            <div class="step-header">
+                                <h2><i class="fas fa-running"></i> Aktivitas Fisik</h2>
+                                <p>Seberapa aktif Anda dalam seminggu? Pilih intensitas dan durasi aktivitas Anda.</p>
+                            </div>
+
+                            <!-- Intensitas Aktivitas -->
+                            <div class="form-group">
+                                <label><i class="fas fa-fire"></i> Intensitas Aktivitas *</label>
+                                <div class="intensity-options">
+                                    <label class="intensity-card">
+                                        <input type="radio" name="intensity" value="ringan" checked>
+                                        <div class="intensity-content">
+                                            <i class="fas fa-walking"></i>
+                                            <strong>Ringan</strong>
+                                            <span>Berjalan santai, bekerja di meja, aktivitas rumah tangga ringan</span>
+                                            <small>Tidak menyebabkan peningkatan detak jantung signifikan</small>
+                                        </div>
+                                    </label>
+                                    <label class="intensity-card">
+                                        <input type="radio" name="intensity" value="sedang">
+                                        <div class="intensity-content">
+                                            <i class="fas fa-bicycle"></i>
+                                            <strong>Sedang</strong>
+                                            <span>Berjalan cepat, bersepeda santai, senam ringan, menari</span>
+                                            <small>Detak jantung meningkat, masih bisa berbicara normal</small>
+                                        </div>
+                                    </label>
+                                    <label class="intensity-card">
+                                        <input type="radio" name="intensity" value="berat">
+                                        <div class="intensity-content">
+                                            <i class="fas fa-running"></i>
+                                            <strong>Berat</strong>
+                                            <span>Berlari, olahraga intensif, angkat beban berat, HIIT</span>
+                                            <small>Detak jantung meningkat signifikan, sulit berbicara</small>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Durasi Aktivitas -->
+                            <div class="form-group">
+                                <label><i class="fas fa-clock"></i> Durasi Aktivitas per Minggu (menit) *</label>
+                                <input type="number" id="activity_duration" step="5" value="150" placeholder="Contoh: 150">
+                                <small class="helper">Rekomendasi WHO: minimal 150 menit aktivitas sedang atau 75 menit aktivitas berat per minggu</small>
+                            </div>
+
+                            <div class="met-info">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Berdasarkan intensitas dan durasi, sistem akan menghitung estimasi pembakaran kalori dan pengaruhnya terhadap metabolisme.</span>
+                            </div>
+
+                            <!-- Daftar Aktivitas: DROPDOWN MODERN MULTI-SELECT -->
+                            <div class="form-group">
+                                <label><i class="fas fa-tasks"></i> Aktivitas yang Sering Dilakukan (pilih sesuai intensitas)</label>
+                                <div class="multiselect-dropdown" id="aktivitasDropdown">
+                                    <div class="dropdown-btn" id="dropdownBtn">
+                                        <span id="selectedText">Pilih aktivitas...</span>
+                                        <span class="dropdown-icon">▼</span>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdownMenu"></div>
+                                </div>
+                                <div class="selected-tags" id="tagContainer"></div>
+                                <small class="helper">Centang aktivitas yang sesuai dengan intensitas pilihan Anda. Ini membantu kami memahami kebiasaan olahraga Anda.</small>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn-prev" data-prev="2"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                                <button type="submit" class="btn-submit">Analisis Risiko <i class="fas fa-chart-line"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Kolom Kanan: Evidence Panel -->
+                <div class="konsultasi-right">
+                    <div class="evidence-card">
+                        <h3><i class="fas fa-microchip"></i> Bukti Terkumpul</h3>
+                        <p class="evidence-sub">Data yang akan digunakan oleh mesin inferensi Forward Chaining.</p>
+                        <div class="evidence-grid">
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-weight-scale"></i> BMI</div>
+                                <span class="evidence-value" id="evidenceBMI">-</span>
+                            </div>
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-chart-line"></i> Kalori Harian</div>
+                                <span class="evidence-value" id="evidenceCalories">0</span>
+                                <span class="evidence-unit">kkal</span>
+                            </div>
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-oil-can"></i> Lemak Harian</div>
+                                <span class="evidence-value" id="evidenceFat">0</span>
+                                <span class="evidence-unit">gram</span>
+                            </div>
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-bread-slice"></i> Karbohidrat Harian</div>
+                                <span class="evidence-value" id="evidenceCarbo">0</span>
+                                <span class="evidence-unit">gram</span>
+                            </div>
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-running"></i> Aktivitas</div>
+                                <span class="evidence-value" id="evidenceActivity">0</span>
+                                <span class="evidence-unit">menit/minggu</span>
+                            </div>
+                            <div class="evidence-item">
+                                <div class="evidence-label"><i class="fas fa-running"></i> Intensitas Aktivitas</div>
+                                <span class="evidence-value" id="evidenceIntensitas">-</span>
+                            </div>
+                        </div>
+                        <div class="rule-trigger">
+                            <i class="fas fa-code-branch"></i>
+                            <span>Sistem Forward Chaining mencari kecocokan antara fakta di atas dengan basis aturan medis.</span>
+                        </div>
+                    </div>
+                    <div class="trust-badges">
+                        <div class="badge-card"><i class="fas fa-lock"></i><span>PRIVASI TERJAMIN</span></div>
+                        <div class="badge-card"><i class="fas fa-stethoscope"></i><span>DATA MEDIS AKURAT</span></div>
+                        <div class="badge-card"><i class="fas fa-chart-line"></i><span>STANDARD WHO 2024</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <h4>LAYANAN</h4>
+                <ul><li>Konsultasi Risiko</li><li>Edukasi Gizi</li><li>Riwayat Analisis</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>INFORMASI</h4>
+                <ul><li>Tentang GLISIA</li><li>Panduan Penggunaan</li><li>FAQ</li><li>Kebijakan Privasi</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>KONTAK</h4>
+                <ul><li><i class="fas fa-envelope"></i> support@glisia.id</li><li><i class="fas fa-phone"></i> (021) 555-0123</li><li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 GLISIA. All rights reserved. Powered by Forward Chaining Expert System.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content result-modal-content">
+            <span class="close-result">&times;</span>
+            <div id="resultContentModal"></div>
+        </div>
+    </div>
+    <div id="foodModal" class="modal">
+        <div class="modal-content">
+            <span class="close-food">&times;</span>
+        </div>
+    </div>
+
+    <!-- Gunakan file konsultasi.js versi terbaru yang sudah tidak mengandung skor -->
+    <script src="js/konsultasi.js"></script>
+</body>
+
+</html>

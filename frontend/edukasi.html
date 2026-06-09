@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GLISIA - Pusat Edukasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/edukasi.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="logo"><i class="fas fa-apple-alt"></i> GLISIA <span class="badge-expert">EXPERT SYSTEM</span></div>
+            <nav class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="konsultasi.html">Konsultasi</a>
+                <a href="edukasi.html" class="active">Edukasi</a>
+                <a href="riwayat.html">Riwayat</a>
+            </nav>
+            <div class="header__actions">
+                <div id="guestMenu">
+                    <button class="btn btn--outline" id="btnLogin">Login</button>
+                </div>
+                <div id="userMenu" style="display: none;">
+                    <div class="user-dropdown">
+                        <button class="btn btn--outline" id="userDropdownBtn">
+                            <i class="fas fa-user-circle"></i> <span id="userName"></span> <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
+                            <a href="#" id="adminPanelLink" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</a>
+                            <hr>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container edukasi-container">
+        <div class="edukasi-header">
+            <h1><i class="fas fa-graduation-cap"></i> Pusat Edukasi GLISIA</h1>
+            <p>Tingkatkan literasi kesehatan Anda dengan materi interaktif yang dirancang khusus untuk memonitor asupan gula dan kesehatan metabolik.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-edukasi">
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchEdukasi" placeholder="Cari materi edukasi (misal: 'diabetes', 'metabolisme')...">
+            </div>
+        </div>
+
+        <!-- Modul Unggulan (random) -->
+        <div class="featured-module" id="featuredModule"></div>
+
+        <!-- Filter Kategori (dinamis dari data) -->
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-kategori="semua">Semua</button>
+            <!-- kategori akan ditambahkan oleh JS -->
+        </div>
+
+        <!-- Daftar Materi -->
+        <div class="materi-grid" id="materiGrid">
+            <div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Memuat materi...</div>
+        </div>
+
+        <!-- Tips Callout -->
+        <div class="tips-callout" id="tipsCallout"></div>
+
+        <!-- Form Saran Materi -->
+        <div class="saran-materi">
+            <h3><i class="fas fa-comment-dots"></i> Berikan Saran Materi</h3>
+            <p>Punya topik kesehatan metabolik yang ingin Anda pelajari? Beritahu tim pakar kami.</p>
+            <form id="saranForm">
+                <div class="form-row-saran">
+                    <input type="text" id="saranNama" placeholder="Nama (opsional)">
+                    <input type="email" id="saranEmail" placeholder="Email (opsional)">
+                </div>
+                <input type="text" id="saranTopik" placeholder="Topik yang diinginkan*" required>
+                <textarea id="saranDeskripsi" rows="3" placeholder="Deskripsi singkat (opsional)"></textarea>
+                <button type="submit" class="btn btn--primary">Kirim Saran →</button>
+            </form>
+            <div id="saranStatus" class="saran-status"></div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div class="footer-col">
+            <h4>LAYANAN</h4>
+            <ul><li>Konsultasi Risiko</li><li>Edukasi Gizi</li><li>Riwayat Analisis</li></ul>
+        </div>
+        <div class="footer-col">
+            <h4>INFORMASI</h4>
+            <ul><li>Tentang GLISIA</li><li>Panduan Penggunaan</li><li>FAQ</li><li>Kebijakan Privasi</li></ul>
+        </div>
+        <div class="footer-col">
+            <h4>KONTAK</h4>
+            <ul><li><i class="fas fa-envelope"></i> support@glisia.id</li><li><i class="fas fa-phone"></i> (021) 555-0123</li><li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li></ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 GLISIA. All rights reserved. Powered by Forward Chaining Expert System.</p>
+    </div>
+</footer>
+
+<!-- Modal Detail Artikel -->
+<div id="detailModal" class="modal">
+    <div class="modal-content detail-modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="detailContent"></div>
+    </div>
+</div>
+
+<!-- SCRIPT: Gambar otomatis & edukasi utama -->
+<script src="js/gambar-otomatis.js"></script>
+<script src="js/edukasi.js"></script>
+</body>
+</html>

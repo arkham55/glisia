@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Admin Dashboard | GLISIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-container">
+    <!-- SIDEBAR dengan tombol toggle di dalamnya -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <i class="fas fa-apple-alt"></i>
+                <span>GLISIA</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="active">
+                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+            </a>
+            <a href="edukasi.html">
+                <i class="fas fa-book-open"></i> <span>Kelola Edukasi</span>
+            </a>
+            <a href="#" id="logoutBtnSidebar">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="fas fa-shield-alt"></i> <span>v2.0 · Secure Access</span>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT (tanpa tombol toggle di dalamnya) -->
+    <main class="admin-main">
+        <div class="admin-header">
+            <div>
+                <h1><i class="fas fa-chart-line"></i> Dashboard Ringkasan</h1>
+                <p class="admin-hero-desc">Selamat datang kembali, <strong id="adminName">Admin</strong>. Pantau kesehatan metabolik pengguna secara real-time.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn--outline" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+        </div>
+
+        <!-- STATISTIK CARD -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div>
+                    <h3 id="totalUsers">—</h3>
+                    <p>Total Pengguna</p>
+                    <div class="growth" id="userGrowth"><i class="fas fa-chart-line"></i> <span>Memuat...</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div>
+                    <h3 id="highRiskPercent">—</h3>
+                    <p>Risiko Tinggi</p>
+                    <div class="growth" id="highRiskCount"><i class="fas fa-users"></i> <span>Memuat...</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                <div>
+                    <h3 id="avgCalories">—</h3>
+                    <p>Rata-rata Kalori</p>
+                    <div class="growth">kkal / hari per pengguna</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div>
+                    <h3 id="totalConsultations">—</h3>
+                    <p>Total Konsultasi</p>
+                    <div class="growth">total sesi konsultasi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRAFIK 3 KOLOM -->
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-simple"></i> Distribusi Risiko per Usia</h3>
+                <canvas id="riskAgeChart" width="400" height="250"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-pie"></i> Penyebab Risiko Tinggi</h3>
+                <canvas id="causeChart" width="400" height="250"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-doughnut"></i> Faktor Paling Sering</h3>
+                <canvas id="factorChart" width="400" height="250"></canvas>
+            </div>
+        </div>
+
+        <!-- TABEL KONSULTASI TERBARU + PAGINATION -->
+        <div class="recent-table">
+            <div class="recent-header">
+                <h3><i class="fas fa-clock"></i> Submisi Konsultasi Terbaru</h3>
+                <span class="badge-live"><i class="fas fa-circle" style="font-size: 0.5rem; color: #10b981;"></i> Live data</span>
+            </div>
+            <div class="table-responsive">
+                <table id="recentTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Pengguna</th>
+                            <th>BMI</th>
+                            <th>Risiko</th>
+                            <th>Faktor Utama</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentTableBody">
+                        <tr><td colspan="6" class="loading-text"><div class="skeleton-loader"></div> Memuat data terbaru...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination controls -->
+            <div class="pagination-controls">
+                <div class="rows-per-page">
+                    <span>Tampilkan</span>
+                    <select id="rowsPerPageSelect">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                    </select>
+                    <span>data</span>
+                </div>
+                <div class="pagination-buttons" id="consultationPagination"></div>
+            </div>
+            <p class="table-note">Menampilkan <span id="totalCons">—</span> entri</p>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 GLISIA Expert System — Dashboard Administrasi</p>
+    </div>
+</footer>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

@@ -26,7 +26,19 @@ def init_db():
 
     # Koneksi ke database yang sudah ada
     conn = get_db_connection()
-    cursor = conn.cursor()   # <--- INI YANG KURANG
+    cursor = conn.cursor()
+    
+    # Tabel users
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            email VARCHAR(100) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            nama VARCHAR(100),
+            role ENUM('admin', 'user') DEFAULT 'user',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
 
     # Tabel hasil analisis
     cursor.execute("""
@@ -36,11 +48,14 @@ def init_db():
             tanggal TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             weight_kg FLOAT,
             height_cm FLOAT,
-            gula_gram_per_hari FLOAT,
-            frekuensi_minuman_per_hari INT,
-            karbohidrat_porsi_per_hari INT,
-            lemak_gram_per_hari FLOAT,
+            usia INT,
+            jenis_kelamin VARCHAR(10),
+            total_kalori_harian FLOAT,
+            total_lemak_harian FLOAT,
+            total_karbohidrat_harian FLOAT,
             aktivitas_menit_per_minggu INT,
+            intensitas_aktivitas VARCHAR(10),
+            tdee FLOAT,
             risk_level VARCHAR(10),
             explanation TEXT,
             recommendations TEXT,
@@ -49,34 +64,62 @@ def init_db():
         )
     """)
 
-    # Tabel edukasi
+    # Tabel edukasi (tanpa durasi_menit, author, reviewer, dan ditambah sumber)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS edukasi (
             id INT AUTO_INCREMENT PRIMARY KEY,
             kategori VARCHAR(50),
             judul VARCHAR(200),
+            subtitle VARCHAR(255),
             konten TEXT,
+            sumber VARCHAR(255),
+            gambar_url VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
-    # Insert contoh data edukasi jika kosong
-    cursor.execute("SELECT COUNT(*) FROM edukasi")
-    if cursor.fetchone()[0] == 0:
-        contoh_edukasi = [
-            ("gula", "Apa itu Gula?", "Gula adalah karbohidrat sederhana yang menjadi sumber energi. Terdiri dari gula alami (buah, susu) dan gula tambahan (gula pasir, sirup)."),
-            ("gula", "Batasan Konsumsi Gula Harian", "WHO merekomendasikan kurang dari 50 gram per hari, idealnya kurang dari 25 gram per hari."),
-            ("dampak", "Dampak Gula Berlebih", "Obesitas, diabetes tipe 2, penyakit jantung, dan gangguan metabolik lainnya."),
-            ("olahraga", "Aktivitas Fisik", "Target minimal 150 menit aktivitas sedang per minggu, seperti jalan cepat, bersepeda, atau berenang."),
-            ("karbohidrat", "Karbohidrat dan Glukosa", "Karbohidrat diubah menjadi glukosa. Pilih karbohidrat kompleks (nasi merah, oat) untuk penyerapan lebih lambat."),
-            ("lemak", "Lemak dan Resistensi Insulin", "Lemak jenuh dan trans dapat memperburuk resistensi insulin. Batasi gorengan dan santan."),
-        ]
-        for kat, judul, konten in contoh_edukasi:
-            cursor.execute(
-                "INSERT INTO edukasi (kategori, judul, konten) VALUES (%s, %s, %s)",
-                (kat, judul, konten),
-            )
+    # Tabel saran_materi
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS saran_materi (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nama VARCHAR(100),
+            email VARCHAR(100),
+            topik VARCHAR(255),
+            deskripsi TEXT,
+            status ENUM('baru', 'dibaca', 'ditindak') DEFAULT 'baru',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
 
-    conn.commit()
+    # Tabel foods
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS foods (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            calories FLOAT NOT NULL,
+            fat FLOAT NOT NULL,
+            carbohydrate FLOAT NOT NULL
+        )
+    """)
+
+    # (Opsional) Migrasi kolom jika diperlukan – tapi tidak melakukan seeding data
+    # Hanya untuk memastikan kolom yang diperlukan ada (jika tabel sudah ada dari versi lama)
+    try:
+        cursor.execute("SHOW COLUMNS FROM edukasi LIKE 'sumber'")
+        if not cursor.fetchone():
+            cursor.execute("ALTER TABLE edukasi ADD COLUMN sumber VARCHAR(255)")
+        # Hapus kolom lama jika masih ada
+        for col in ['durasi_menit', 'author', 'reviewer']:
+            cursor.execute(f"SHOW COLUMNS FROM edukasi LIKE '{col}'")
+            if cursor.fetchone():
+                cursor.execute(f"ALTER TABLE edukasi DROP COLUMN {col}")
+    except mysql.connector.Error:
+        # Abaikan jika tidak dapat memodifikasi (misal tabel belum ada)
+        pass
+
+    # Tidak ada seeding data edukasi di sini
+    # Data edukasi akan dikelola via admin atau import terpisah
+
     cursor.close()
     conn.close()
+    print("Database initialized successfully (no seeding data).")
