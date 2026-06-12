@@ -10,6 +10,37 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Penyesuaian untuk logo gambar dan teks - VERSI DIPERBESAR (tanpa badge) */
+        .logo-img {
+            height: 55px;
+            width: auto;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            display: none;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1E88E5;
+            line-height: 1;
+        }
+
+        /* Badge tidak diperlukan lagi, tetapi jika ada class tetap, kita biarkan kosong */
+        .badge-expert {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,8 +48,11 @@
     <header class="header">
         <div class="container">
             <div class="header__inner">
-                <div class="logo"><i class="fas fa-apple-alt"></i> GLISIA <span class="badge-expert">EXPERT
-                        SYSTEM</span></div>
+                <div class="logo">
+                    <img src="assets/images/Logo-Glisia.png" alt="GLISIA Logo" class="logo-img">
+                    <span class="logo-text">GLISIA</span>
+                    <!-- Hapus badge expert system -->
+                </div>
                 <nav class="nav">
                     <a href="index.html" class="active">Beranda</a>
                     <a href="konsultasi.html">Konsultasi</a>
@@ -33,11 +67,13 @@
                     <div id="userMenu" style="display: none;">
                         <div class="user-dropdown">
                             <button class="btn btn--outline" id="userDropdownBtn">
-                                <i class="fas fa-user-circle"></i> <span id="userName"></span> <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-user-circle"></i> <span id="userName"></span> <i
+                                    class="fas fa-chevron-down"></i>
                             </button>
                             <div class="dropdown-content" id="dropdownContent">
                                 <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
-                                <a href="#" id="adminPanelLink" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</a>
+                                <a href="#" id="adminPanelLink" style="display: none;"><i class="fas fa-cog"></i> Admin
+                                    Panel</a>
                                 <hr>
                                 <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </div>
@@ -50,20 +86,23 @@
     </header>
 
     <main>
+        <!-- Hero section -->
         <section id="beranda" class="hero-section">
             <div class="container">
                 <div class="hero-grid">
                     <div class="hero__content">
                         <div class="hero__kicker">GLISIA EXPERT SYSTEM</div>
                         <h1>Deteksi risiko <span class="highlight">konsumsi kalori tinggi</span></h1>
-                        <p>GLISIA menggunakan teknologi sistem pakar <strong>Forward Chaining</strong> untuk menganalisis kebiasaan konsumsi kalori, karbohidrat, lemak, serta aktivitas fisik Anda.</p>
+                        <p>GLISIA menggunakan teknologi sistem pakar <strong>Forward Chaining</strong> untuk
+                            menganalisis kebiasaan konsumsi kalori, karbohidrat, lemak, serta aktivitas fisik Anda.</p>
                         <div class="hero__cta">
-                            <button class="btn btn--primary btn-large" id="heroKonsultasi"><i class="fas fa-stethoscope"></i> Mulai Konsultasi Gratis</button>
-                            <button class="btn btn--secondary" id="heroEdukasi"><i class="fas fa-book-open"></i> Pelajari Edukasi</button>
+                            <button class="btn btn--primary btn-large" id="heroKonsultasi"><i
+                                    class="fas fa-stethoscope"></i> Mulai Konsultasi Gratis</button>
+                            <button class="btn btn--secondary" id="heroEdukasi"><i class="fas fa-book-open"></i>
+                                Pelajari Edukasi</button>
                         </div>
                     </div>
                     <div class="hero__right">
-                        <!-- METABOLIC TRACKER CARD -->
                         <div class="hero__card">
                             <div class="tracker-header">
                                 <h3><i class="fas fa-chart-line"></i> Metabolic Tracker</h3>
@@ -86,7 +125,8 @@
                                 </div>
                             </div>
                             <div class="daily-log">
-                                <h4>📋 Log Hari Ini <button class="btn-clear-log" id="clearLogBtn"><i class="fas fa-trash-alt"></i> Hapus Semua</button></h4>
+                                <h4>📋 Log Hari Ini <button class="btn-clear-log" id="clearLogBtn"><i
+                                            class="fas fa-trash-alt"></i> Hapus Semua</button></h4>
                                 <div id="dailyLogList" class="daily-log-list">
                                     <div class="empty-log">Belum ada item. Klik tombol di atas untuk mencatat.</div>
                                 </div>
@@ -100,7 +140,8 @@
                             <div class="tips-section">
                                 <h4><i class="fas fa-lightbulb"></i> Tips Sehat Hari Ini</h4>
                                 <div class="tip-card" id="dailyTip">
-                                    <p>💡 Ganti minuman manis dengan air putih atau infused water untuk mengurangi asupan kalori kosong harian.</p>
+                                    <p>💡 Ganti minuman manis dengan air putih atau infused water untuk mengurangi
+                                        asupan kalori kosong harian.</p>
                                 </div>
                             </div>
                             <div class="evidence-panel">
@@ -113,7 +154,8 @@
                                 </div>
                             </div>
                             <div class="tracker-note">
-                                <i class="fas fa-info-circle"></i> Nilai nutrisi berdasarkan perkiraan. Gunakan <strong>Konsultasi</strong> untuk analisis lebih akurat.
+                                <i class="fas fa-info-circle"></i> Nilai nutrisi berdasarkan perkiraan. Gunakan
+                                <strong>Konsultasi</strong> untuk analisis lebih akurat.
                             </div>
                         </div>
                     </div>
@@ -126,7 +168,8 @@
             <div class="container">
                 <div class="section-header">
                     <h2><i class="fas fa-chart-simple"></i> Kalori Tersembunyi di Balik Minuman Populer</h2>
-                    <p>Minuman manis mengandung kalori kosong yang tinggi. Satu gelas minuman manis bisa mengandung kalori setara dengan satu porsi nasi! Lihat perbandingannya di bawah ini.</p>
+                    <p>Minuman manis mengandung kalori kosong yang tinggi. Satu gelas minuman manis bisa mengandung
+                        kalori setara dengan satu porsi nasi! Lihat perbandingannya di bawah ini.</p>
                 </div>
                 <div class="vis-grid">
                     <div class="vis-card">
@@ -156,23 +199,28 @@
             <div class="container">
                 <div class="why-header">
                     <h2><i class="fas fa-question-circle"></i> Kenapa Monitoring Konsumsi Kalori Itu Penting?</h2>
-                    <p>Konsumsi kalori berlebih (terutama dari karbohidrat sederhana dan lemak jenuh) tidak hanya menyebabkan kenaikan berat badan, tetapi juga memicu resistensi insulin, diabetes, dan penyakit jantung.</p>
+                    <p>Konsumsi kalori berlebih (terutama dari karbohidrat sederhana dan lemak jenuh) tidak hanya
+                        menyebabkan kenaikan berat badan, tetapi juga memicu resistensi insulin, diabetes, dan penyakit
+                        jantung.</p>
                 </div>
                 <div class="why-cards">
                     <div class="info-card">
                         <div class="icon"><i class="fas fa-chart-line"></i></div>
                         <h3>Lonjakan Energi Instan</h3>
-                        <p>Kalori dari minuman manis dan makanan tinggi gula diserap sangat cepat, menyebabkan lonjakan energi sesaat yang diikuti kelelahan.</p>
+                        <p>Kalori dari minuman manis dan makanan tinggi gula diserap sangat cepat, menyebabkan lonjakan
+                            energi sesaat yang diikuti kelelahan.</p>
                     </div>
                     <div class="info-card">
                         <div class="icon"><i class="fas fa-shield-alt"></i></div>
                         <h3>Resistensi Insulin</h3>
-                        <p>Kebiasaan konsumsi kalori berlebihan (terutama dari karbohidrat olahan) memaksa pankreas bekerja terlalu keras, meningkatkan risiko Diabetes Melitus Tipe 2.</p>
+                        <p>Kebiasaan konsumsi kalori berlebihan (terutama dari karbohidrat olahan) memaksa pankreas
+                            bekerja terlalu keras, meningkatkan risiko Diabetes Melitus Tipe 2.</p>
                     </div>
                     <div class="info-card">
                         <div class="icon"><i class="fas fa-heartbeat"></i></div>
                         <h3>Sindrom Metabolik</h3>
-                        <p>Kelebihan kalori berkontribusi pada tekanan darah tinggi, lemak perut, dan risiko penyakit jantung.</p>
+                        <p>Kelebihan kalori berkontribusi pada tekanan darah tinggi, lemak perut, dan risiko penyakit
+                            jantung.</p>
                     </div>
                 </div>
             </div>
@@ -183,25 +231,29 @@
             <div class="container">
                 <div class="section-header">
                     <h2><i class="fas fa-cogs"></i> Cara Kerja Sistem Pakar GLISIA</h2>
-                    <p>Kami menggunakan metode <strong>Forward Chaining</strong> untuk menelusuri data konsumsi kalori, karbohidrat, lemak, dan aktivitas Anda.</p>
+                    <p>Kami menggunakan metode <strong>Forward Chaining</strong> untuk menelusuri data konsumsi kalori,
+                        karbohidrat, lemak, dan aktivitas Anda.</p>
                 </div>
                 <div class="flow-steps">
                     <div class="flow-step">
                         <div class="step-number">1</div><i class="fas fa-edit"></i>
                         <h4>Input Fakta</h4>
-                        <p>Anda memasukkan data makanan/minuman yang dikonsumsi (kalori, karbohidrat, lemak) serta aktivitas fisik.</p>
+                        <p>Anda memasukkan data makanan/minuman yang dikonsumsi (kalori, karbohidrat, lemak) serta
+                            aktivitas fisik.</p>
                     </div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step">
                         <div class="step-number">2</div><i class="fas fa-code-branch"></i>
                         <h4>Pencocokan Aturan</h4>
-                        <p>Sistem mencocokkan dengan basis aturan IF-THEN yang disusun berdasarkan pedoman WHO dan Kemenkes RI.</p>
+                        <p>Sistem mencocokkan dengan basis aturan IF-THEN yang disusun berdasarkan pedoman WHO dan
+                            Kemenkes RI.</p>
                     </div>
                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
                     <div class="flow-step">
                         <div class="step-number">3</div><i class="fas fa-clipboard-list"></i>
                         <h4>Kesimpulan & Rekomendasi</h4>
-                        <p>Anda mendapat tingkat risiko konsumsi kalori berlebih + rekomendasi perubahan pola makan dan aktivitas.</p>
+                        <p>Anda mendapat tingkat risiko konsumsi kalori berlebih + rekomendasi perubahan pola makan dan
+                            aktivitas.</p>
                     </div>
                 </div>
                 <div class="rule-section">
@@ -214,25 +266,31 @@
                         <div class="rule-example-item rule-high">
                             <div class="rule-icon"><i class="fas fa-exclamation-triangle"></i></div>
                             <div class="rule-content">
-                                <div class="rule-title">Aturan 1 <span class="risk-badge-example high">Risiko TINGGI</span></div>
+                                <div class="rule-title">Aturan 1 <span class="risk-badge-example high">Risiko
+                                        TINGGI</span></div>
                                 <code>"IF karbohidrat > 350g/hari AND aktivitas = ringan THEN risiko_kalori = TINGGI"</code>
-                                <p class="rule-desc">Konsumsi karbohidrat berlebih dengan kurang gerak meningkatkan risiko kelebihan kalori dan gangguan metabolik.</p>
+                                <p class="rule-desc">Konsumsi karbohidrat berlebih dengan kurang gerak meningkatkan
+                                    risiko kelebihan kalori dan gangguan metabolik.</p>
                             </div>
                         </div>
                         <div class="rule-example-item rule-medium">
                             <div class="rule-icon"><i class="fas fa-chart-line"></i></div>
                             <div class="rule-content">
-                                <div class="rule-title">Aturan 2 <span class="risk-badge-example medium">Risiko SEDANG</span></div>
+                                <div class="rule-title">Aturan 2 <span class="risk-badge-example medium">Risiko
+                                        SEDANG</span></div>
                                 <code>"IF kalori > 2500 kkal AND BMI > 25 THEN risiko_kalori = SEDANG"</code>
-                                <p class="rule-desc">Kelebihan kalori dan kelebihan berat badan meningkatkan risiko metabolik.</p>
+                                <p class="rule-desc">Kelebihan kalori dan kelebihan berat badan meningkatkan risiko
+                                    metabolik.</p>
                             </div>
                         </div>
                         <div class="rule-example-item rule-low">
                             <div class="rule-icon"><i class="fas fa-check-circle"></i></div>
                             <div class="rule-content">
-                                <div class="rule-title">Aturan 3 <span class="risk-badge-example low">Risiko RENDAH</span></div>
+                                <div class="rule-title">Aturan 3 <span class="risk-badge-example low">Risiko
+                                        RENDAH</span></div>
                                 <code>"IF kalori < 2000 kkal AND aktivitas = sedang AND BMI normal THEN risiko_kalori = RENDAH"</code>
-                                <p class="rule-desc">Pola makan terkendali, aktif bergerak, dan berat ideal menekan dampak kelebihan kalori.</p>
+                                <p class="rule-desc">Pola makan terkendali, aktif bergerak, dan berat ideal menekan
+                                    dampak kelebihan kalori.</p>
                             </div>
                         </div>
                     </div>
@@ -244,7 +302,8 @@
             <div class="cta-block">
                 <div class="cta-text">
                     <h2>Siap mengetahui tingkat risiko konsumsi kalori Anda?</h2>
-                    <p>Hanya butuh waktu 3 menit untuk mendapatkan analisis mendalam dan langkah yang tepat untuk mengurangi kebiasaan konsumsi kalori berlebih.</p>
+                    <p>Hanya butuh waktu 3 menit untuk mendapatkan analisis mendalam dan langkah yang tepat untuk
+                        mengurangi kebiasaan konsumsi kalori berlebih.</p>
                 </div>
                 <div class="cta-buttons">
                     <button class="btn btn--primary btn-large" id="ctaKonsultasi">Konsultasi Sekarang</button>
@@ -283,12 +342,24 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 GLISIA. All rights reserved. Powered by Forward Chaining Expert System untuk deteksi risiko konsumsi kalori tinggi.</p>
+            <p>&copy; 2026 GLISIA. All rights reserved. Powered by Forward Chaining Expert System untuk deteksi risiko
+                konsumsi kalori tinggi.</p>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
     <script>
+        // Timpa behavior tombol edukasi agar redirect ke halaman edukasi.html
+        (function () {
+            const heroEdukasi = document.getElementById('heroEdukasi');
+            const ctaPelajari = document.getElementById('ctaPelajari');
+            function goToEdukasi() {
+                window.location.href = 'edukasi.html';
+            }
+            if (heroEdukasi) heroEdukasi.onclick = goToEdukasi;
+            if (ctaPelajari) ctaPelajari.onclick = goToEdukasi;
+        })();
+
         // Render kalori bar untuk visualisasi
         document.querySelectorAll('.calorie-bar').forEach(bar => {
             const kalori = parseFloat(bar.dataset.kalori);

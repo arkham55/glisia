@@ -250,4 +250,5 @@ def get_consultation_detail(consultation_id):
             'education_material': row['education_material'],
             'trace': trace
         }
+    
     })

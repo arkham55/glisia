@@ -22,15 +22,17 @@
                     <label><i class="fas fa-envelope"></i> Alamat Email</label>
                     <input type="email" id="email" placeholder="nama@contoh.com" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label><i class="fas fa-lock"></i> Kata Sandi</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <i class="fas fa-eye toggle-password" data-target="password"></i>
+                    </div>
                 </div>
                 <div class="form-options">
                     <label class="checkbox-label">
                         <input type="checkbox" id="remember"> Ingat saya
                     </label>
-                    <a href="#" id="forgotPassword">Lupa password?</a>
                 </div>
                 <button type="submit" class="btn-login">Masuk</button>
                 <div class="auth-footer">

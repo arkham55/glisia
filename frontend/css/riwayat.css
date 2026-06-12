@@ -60,21 +60,27 @@ body {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1E88E5;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 55px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1E88E5;
+    line-height: 1;
 }
 
 .badge-expert {
-    font-size: 0.7rem;
-    background: #E3F2FD;
-    padding: 2px 8px;
-    border-radius: 30px;
-    color: #1565C0;
-    font-weight: 500;
+    display: none; /* badge disembunyikan */
 }
 
 .nav {
@@ -94,6 +100,12 @@ body {
 }
 
 .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#guestMenu, #userMenu {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -151,21 +163,23 @@ body {
     border: none;
 }
 
-/* User Dropdown */
+/* ===== USER DROPDOWN ===== */
 .user-dropdown {
     position: relative;
     display: inline-block;
 }
-.dropdown-content {
+.user-dropdown .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
+    top: 100%;
     background: white;
     min-width: 180px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    z-index: 100;
+    z-index: 1000;
     overflow: hidden;
+    margin-top: 0;
 }
 .user-dropdown:hover .dropdown-content {
     display: block;
@@ -178,6 +192,7 @@ body {
     text-decoration: none;
     color: #1E293B;
     border-bottom: 1px solid #E2E8F0;
+    transition: background 0.2s;
 }
 .dropdown-content a:hover {
     background: #F1F5F9;
@@ -187,7 +202,7 @@ body {
     border-color: #E2E8F0;
 }
 
-/* ===== Hero (khusus riwayat, disesuaikan) ===== */
+/* ===== Hero (khusus riwayat) ===== */
 .rw-hero {
     padding: 48px 0 32px;
     background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%);
@@ -337,6 +352,48 @@ body {
     padding: 6px 16px;
     border-radius: 40px;
     color: #475569;
+}
+
+/* Filter group */
+.rw-filter-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.rw-filter-select {
+    background: white;
+    border: 1px solid #CBD5E1;
+    border-radius: 40px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1E293B;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.rw-filter-select:focus {
+    outline: none;
+    border-color: #1E88E5;
+    box-shadow: 0 0 0 2px rgba(30,136,229,0.2);
+}
+.rw-filter-btn {
+    background: #1E88E5;
+    border: none;
+    border-radius: 40px;
+    padding: 8px 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+.rw-filter-btn:hover {
+    background: #1565C0;
+    transform: translateY(-1px);
 }
 
 /* ===== Table ===== */
@@ -626,6 +683,7 @@ body {
     gap: 8px;
     padding: 20px 28px 0;
     border-bottom: 1px solid #E2E8F0;
+    overflow-x: auto;
 }
 .rw-tab {
     background: none;
@@ -638,6 +696,7 @@ body {
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     transition: 0.2s;
+    white-space: nowrap;
 }
 .rw-tab.active {
     color: #1E88E5;
@@ -697,13 +756,9 @@ body {
     position: relative;
     height: 8px;
     background: linear-gradient(to right,
-        /* Segmen Kurang (0-20%) – gradasi biru elegan */
         #1e6ec5 0%, #3a86e8 10%, #6ab0ff 20%,
-        /* Segmen Normal (20-45%) – gradasi hijau segar */
         #34d399 20%, #41d9a5 32%, #10b981 45%,
-        /* Segmen Overweight (45-65%) – gradasi oranye berapi */
         #f59e0b 45%, #fbbf24 55%, #f97316 65%,
-        /* Segmen Obesitas (65-100%) – gradasi merah tegas */
         #f87171 65%, #fc9e9e 80%, #dc2626 100%
     );
     border-radius: 4px;
@@ -723,19 +778,20 @@ body {
     z-index: 2;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     pointer-events: none;
-    /* left: 0% !important; ← HAPUS BARIS INI */
 }
 .rw-bmi-labels {
     display: flex;
     justify-content: space-between;
     font-size: 0.7rem;
     color: #64748B;
+    position: relative;
 }
 .rw-explanation {
     background: #F1F5F9;
     border-left: 4px solid #1E88E5;
     border-radius: 16px;
     padding: 16px;
+    margin-bottom: 24px;
 }
 .rw-explanation h4 {
     font-size: 0.9rem;
@@ -746,38 +802,52 @@ body {
 /* Asupan comparison */
 .rw-asupan-comparison {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
     background: #F8FAFE;
     border-radius: 24px;
-    padding: 24px;
+    padding: 24px 16px;
     margin-bottom: 24px;
     flex-wrap: wrap;
+    text-align: center;
 }
 .rw-asupan-col {
-    text-align: center;
+    flex: 1;
+    min-width: 100px;
 }
 .rw-asupan-col__label {
     font-size: 0.7rem;
     text-transform: uppercase;
     font-weight: 600;
     color: #64748B;
+    margin-bottom: 8px;
 }
 .rw-asupan-col__val {
     font-size: 2rem;
     font-weight: 800;
+    color: #0F1724;
+    line-height: 1.2;
+}
+.rw-asupan-col__unit {
+    font-size: 0.7rem;
+    color: #64748B;
+    margin-top: 4px;
 }
 .rw-asupan-vs {
-    font-size: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #64748B;
+    min-width: 80px;
 }
 .rw-surplus-badge {
     font-size: 1rem;
     font-weight: 700;
     padding: 6px 12px;
     border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 4px;
 }
 /* Makro */
 .rw-makro-section {
@@ -814,6 +884,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    margin-top: 16px;
 }
 .rw-aktivitas-card {
     background: #F8FAFE;
@@ -850,13 +921,65 @@ body {
 .rw-edukasi-section {
     margin-top: 24px;
 }
-.rw-edukasi-item {
+.rw-edukasi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+}
+.rw-edukasi-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.rw-edukasi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+.rw-edukasi-card__inner {
+    padding: 18px;
+}
+.rw-edukasi-category {
+    display: inline-block;
+    background: #E3F2FD;
+    color: #1E88E5;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 30px;
+    margin-bottom: 12px;
+}
+.rw-edukasi-card h4 {
+    font-size: 1rem;
+    margin: 0 0 8px;
+    color: #1E293B;
+}
+.rw-edukasi-card p {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+.rw-edukasi-meta {
     display: flex;
-    gap: 12px;
-    padding: 12px;
-    background: #F8FAFE;
-    border-radius: 16px;
+    justify-content: space-between;
     align-items: center;
+    font-size: 0.7rem;
+    color: #64748B;
+}
+.rw-edukasi-read {
+    background: none;
+    border: none;
+    color: #1E88E5;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+.rw-edukasi-read:hover {
+    text-decoration: underline;
 }
 /* Trace */
 .rw-trace-info {
@@ -967,7 +1090,7 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* ===== Footer (sama seperti global) ===== */
+/* ===== Footer ===== */
 .footer {
     background: #0F1724;
     color: #94A3B8;
@@ -998,12 +1121,13 @@ body {
     font-size: 0.8rem;
 }
 
-/* ===== Responsive ===== */
+/* ===== RESPONSIVE (SAMA DENGAN HALAMAN LAIN) ===== */
 @media (max-width: 1024px) {
     .rw-stats {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
@@ -1011,6 +1135,10 @@ body {
     .rw-hero__inner {
         flex-direction: column;
         text-align: center;
+    }
+    .rw-hero__sub {
+        margin-left: auto;
+        margin-right: auto;
     }
     .rw-stats {
         grid-template-columns: 1fr;
@@ -1027,349 +1155,275 @@ body {
     .rw-aktivitas-detail {
         grid-template-columns: 1fr;
     }
-    .nav {
-        display: none;
-    }
+    /* JANGAN sembunyikan nav, biarkan default */
     .rw-modal__tabs {
         overflow-x: auto;
     }
 }
-/* Perbaikan dropdown user agar tidak hilang saat kursor ke menu */
-.user-dropdown {
-    position: relative;
-    display: inline-block;
-}
-.user-dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: white;
-    min-width: 180px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    z-index: 1000;
-    overflow: hidden;
-    margin-top: 8px;
-}
-.user-dropdown:hover .dropdown-content {
-    display: block;
-}
-.dropdown-content a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #1E293B;
-    border-bottom: 1px solid #E2E8F0;
-    transition: background 0.2s;
-}
-.dropdown-content a:hover {
-    background: #F1F5F9;
-}
-/* Edukasi rekomendasi dalam modal */
-.rw-edukasi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    margin-top: 16px;
-}
-.rw-edukasi-card {
-    background: white;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    transition: all 0.2s;
-    cursor: pointer;
-}
-.rw-edukasi-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-}
-.rw-edukasi-card__inner {
-    padding: 18px;
-}
-.rw-edukasi-category {
-    display: inline-block;
-    background: #E3F2FD;
-    color: #1E88E5;
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 30px;
-    margin-bottom: 12px;
-}
-.rw-edukasi-card h4 {
-    font-size: 1rem;
-    margin: 0 0 8px;
-    color: #1E293B;
-}
-.rw-edukasi-card p {
-    font-size: 0.8rem;
-    color: #475569;
-    margin-bottom: 12px;
-    line-height: 1.4;
-}
-.rw-edukasi-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.7rem;
-    color: #64748B;
-}
-.rw-edukasi-read {
-    background: none;
-    border: none;
-    color: #1E88E5;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.75rem;
-}
-.rw-edukasi-read:hover {
-    text-decoration: underline;
-}
-/* Badge kategori asupan (sama seperti konsultasi) */
-.nutri-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-left: 8px;
-    vertical-align: middle;
-}
-/* Filter group */
-.rw-filter-group {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.rw-filter-select {
-    background: white;
-    border: 1px solid #CBD5E1;
-    border-radius: 40px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #1E293B;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.rw-filter-select:focus {
-    outline: none;
-    border-color: #1E88E5;
-    box-shadow: 0 0 0 2px rgba(30,136,229,0.2);
-}
-.rw-filter-btn {
-    background: #1E88E5;
-    border: none;
-    border-radius: 40px;
-    padding: 8px 20px;
-    color: white;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
-}
-.rw-filter-btn:hover {
-    background: #1565C0;
-    transform: translateY(-1px);
-}
+
+/* KHUSUS UNTUK HP (640px ke bawah) - Logo kiri, tombol kanan, nav di bawah */
 @media (max-width: 640px) {
-    .rw-filter-group {
+    .header__inner {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        order: 1;
+        flex-shrink: 1;
+    }
+    .logo-img {
+        height: 40px;
+    }
+    .logo-text {
+        font-size: 1.4rem;
+    }
+    .nav {
+        order: 3;
         width: 100%;
+        justify-content: center;
+        margin-top: 12px;
+    }
+    .header__actions {
+        order: 2;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    .header__actions .btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+    }
+    /* Penyesuaian konten riwayat */
+    .rw-hero {
+        padding: 30px 0 20px;
+    }
+    .rw-hero__title {
+        font-size: 1.8rem;
+    }
+    .rw-stats {
+        margin: 20px 0;
+    }
+    .rw-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .rw-search {
+        max-width: 100%;
+    }
+    .rw-filter-group {
         justify-content: space-between;
     }
     .rw-filter-select {
         flex: 1;
     }
-}
-/* Atur posisi label di tengah area masing-masing kategori */
-.rw-bmi-labels {
-    position: relative;
-}
-.rw-bmi-labels span:nth-child(1) { /* Kurang */
-    transform: translateX(0px);
-    display: inline-block;
-}
-.rw-bmi-labels span:nth-child(2) { /* Normal */
-    transform: translateX(-75px);
-    display: inline-block;
-}
-.rw-bmi-labels span:nth-child(3) { /* Overweight */
-    transform: translateX(-110px);
-    display: inline-block;
-}
-.rw-bmi-labels span:nth-child(4) { /* Obesitas */
-    transform: translateX(-200px);
-    display: inline-block;
-}
-.rw-explanation {
-    margin-bottom: 24px;
+    .rw-table th, .rw-table td {
+        padding: 12px;
+    }
+    .rw-modal {
+        width: 95%;
+    }
+    .rw-modal__header {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .rw-modal__risk-badge {
+        margin-right: 0;
+        align-self: flex-start;
+    }
+    .rw-modal__body {
+        padding: 20px;
+    }
+    .user-dropdown .dropdown-content {
+        right: auto;
+        left: 0;
+    }
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+    .footer-col ul {
+        padding-left: 0;
+    }
 }
 
-.rw-insight .insight-card {
-    margin-top: 0;
+@media (max-width: 480px) {
+    .rw-stat-card__value {
+        font-size: 1.5rem;
+    }
+    .rw-asupan-col__val {
+        font-size: 1.5rem;
+    }
+    .rw-bmi-value {
+        font-size: 1.4rem;
+    }
+    .rw-modal__title {
+        font-size: 1.2rem;
+    }
 }
-/* ===== PERBAIKAN TAMPILAN ASUPAN & TDEE ===== */
-.rw-asupan-comparison {
+/* ===== PERBAIKAN MODAL DETAIL AGAR TIDAK TERPOTONG ===== */
+.rw-modal {
+    max-width: 900px;  /* sedikit diperlebar */
+    width: 95%;
+}
+
+.rw-modal__body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    max-height: calc(90vh - 180px); /* hindari footer terpotong */
+}
+
+/* Rekomendasi item: buat lebih rapi dan wrap */
+.rw-rekom-item {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
+    gap: 14px;
+    align-items: flex-start;  /* jangan stretch, biar nomor di atas */
     background: #F8FAFE;
-    border-radius: 24px;
-    padding: 24px 16px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    text-align: center;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: 1px solid #E2E8F0;
 }
 
-.rw-asupan-col {
-    flex: 1;
-    min-width: 100px;
-}
-
-.rw-asupan-col__label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #64748B;
-    margin-bottom: 8px;
-}
-
-.rw-asupan-col__val {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #0F1724;
-    line-height: 1.2;
-}
-
-.rw-asupan-col__unit {
-    font-size: 0.7rem;
-    color: #64748B;
-    margin-top: 4px;
-}
-
-.rw-asupan-vs {
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #64748B;
-    min-width: 80px;
-}
-
-.rw-surplus-badge {
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 6px 12px;
+.rw-rekom-item__num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: #E3F2FD;
     border-radius: 30px;
-    display: inline-block;
-    margin-bottom: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #1E88E5;
 }
 
-/* TDEE INFO */
+.rw-rekom-item__text {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #1E293B;
+    word-break: break-word;
+}
+
+/* Footer modal: tombol hapus dan tutup */
+.rw-modal__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 24px;
+    background: #F8FAFE;
+    border-top: 1px solid #E2E8F0;
+    flex-wrap: wrap;
+}
+
+.rw-modal__footer .btn {
+    min-width: 120px;
+    justify-content: center;
+}
+
+/* Pastikan tombol tidak keluar dari modal */
+@media (max-width: 480px) {
+    .rw-modal__footer {
+        flex-direction: column;
+    }
+    .rw-modal__footer .btn {
+        width: 100%;
+    }
+}
+
+/* Insight card di dalam modal (tambahan) */
+.rw-insight {
+    margin: 20px 0;
+}
+.insight-card {
+    background: #E3F2FD;
+    border-radius: 20px;
+    padding: 20px;
+    border-left: 4px solid #1E88E5;
+}
+.insight-card h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1565C0;
+}
+.insight-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #1E293B;
+}
+
+/* TDEE info di tab asupan */
 .tdee-info {
     background: #F0F9FF;
-    padding: 12px 16px;
+    padding: 16px;
     border-radius: 16px;
-    margin-bottom: 24px;
+    margin: 20px 0;
     border-left: 4px solid #1E88E5;
 }
 
-.tdee-info p {
-    margin: 4px 0;
-    font-size: 0.9rem;
+/* Pastikan semua konten di dalam tab tidak overflow */
+.rw-tab-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-.status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-left: 8px;
-    vertical-align: middle;
-}
-
-.status-defisit {
-    background: #FEF3C7;
-    color: #D97706;
-    border: 1px solid #FDE68A;
-}
-
-.status-seimbang {
-    background: #D1FAE5;
-    color: #059669;
-    border: 1px solid #A7F3D0;
-}
-
-.status-surplus {
-    background: #FEE2E2;
-    color: #DC2626;
-    border: 1px solid #FECACA;
-}
-
-/* Makro & Aktivitas */
-.rw-makro-section {
-    margin-bottom: 24px;
-}
-
-.rw-makro-item {
-    margin-bottom: 16px;
-}
-
-.rw-makro-item__head {
+/* Trace step juga rapikan */
+.rw-trace-step {
     display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    margin-bottom: 6px;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #E2E8F0;
+}
+.rw-trace-step__num {
+    flex-shrink: 0;
+}
+.rw-trace-step__content {
+    flex: 1;
+}
+/* ===== PERBAIKAN TAB MODAL AGAR TIDAK TERPOTONG ===== */
+.rw-modal__tabs {
+    display: flex;
+    flex-wrap: wrap;          /* Tab bisa pindah baris jika tidak muat */
+    gap: 8px;
+    padding: 16px 20px 0;
+    border-bottom: 1px solid #E2E8F0;
+    overflow-x: visible;      /* Nonaktifkan scroll horizontal */
 }
 
-.rw-makro-bar {
-    height: 8px;
-    background: #E2E8F0;
-    border-radius: 4px;
-    overflow: hidden;
+.rw-tab {
+    white-space: nowrap;      /* Teks tidak terputus dalam satu baris */
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    border-radius: 40px;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: none;      /* Hapus border bawah bawaan */
 }
 
-.rw-makro-bar__fill--lemak { background: #FFB300; }
-.rw-makro-bar__fill--karbo { background: #1E88E5; }
-
-.rw-aktivitas-detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 16px;
+.rw-tab.active {
+    background: #E3F2FD;      /* Background biru muda untuk tab aktif */
+    color: #1E88E5;
 }
 
-/* ===== RESPONSIVE ===== */
+/* Untuk layar sangat kecil, izinkan teks tab membungkus */
 @media (max-width: 640px) {
-    .rw-asupan-comparison {
-        flex-direction: column;
-        gap: 16px;
+    .rw-tab {
+        white-space: normal;
+        text-align: center;
+        flex: 1 0 auto;
     }
-    .rw-asupan-vs {
-        margin: 0;
+    .rw-modal__tabs {
+        justify-content: center;
     }
-    .rw-aktivitas-detail {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Jarak antar elemen di tab ringkasan */
-.rw-explanation {
-    margin-bottom: 24px;
-}
-
-.rw-insight .insight-card {
-    margin-top: 0;
 }

@@ -36,22 +36,30 @@ body {
     gap: 20px;
 }
 
+/* Logo styling (tidak mengandalkan badge, karena badge sudah dihapus di HTML) */
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1E88E5;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
+.logo-img {
+    height: 55px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1E88E5;
+    line-height: 1;
+}
+
+/* Badge disembunyikan sepenuhnya (untuk jaga-jaga) */
 .badge-expert {
-    font-size: 0.7rem;
-    background: #E3F2FD;
-    padding: 2px 8px;
-    border-radius: 30px;
-    color: #1565C0;
-    font-weight: 500;
+    display: none;
 }
 
 .nav {
@@ -71,6 +79,12 @@ body {
 }
 
 .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#guestMenu, #userMenu {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -307,10 +321,6 @@ body {
     image-rendering: auto;
     image-rendering: crisp-edges;
     transform: translateZ(0);
-}
-
-.featured-image img:hover {
-    transform: none;
 }
 
 .featured-image i {
@@ -649,11 +659,8 @@ body {
     font-size: 0.8rem;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 20px;
-    }
+/* ===== RESPONSIVE BREAKPOINTS (SAMA DENGAN INDEX & KONSULTASI) ===== */
+@media (max-width: 1024px) {
     .featured-module {
         flex-direction: column;
     }
@@ -661,19 +668,17 @@ body {
         min-height: 200px;
         max-height: 250px;
     }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
     .materi-grid {
         grid-template-columns: 1fr;
     }
     .filter-bar {
         justify-content: flex-start;
-    }
-    .header__inner {
-        flex-direction: column;
-        text-align: center;
-    }
-    .nav {
-        flex-wrap: wrap;
-        justify-content: center;
     }
     .form-row-saran {
         flex-direction: column;
@@ -688,16 +693,102 @@ body {
     .featured-content h2 {
         font-size: 1.3rem;
     }
+    /* Hapus flex-direction column pada header di 768px agar tidak konflik dengan 640px */
+    .header__inner {
+        /* biarkan tetap row, nanti di 640px kita atur wrap */
+        flex-wrap: wrap;
+    }
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
-@media (max-width: 480px) {
+/* KHUSUS UNTUK HP (640px ke bawah) - Logo kiri, tombol kanan, nav di bawah */
+@media (max-width: 640px) {
+    .header__inner {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        order: 1;
+        flex-shrink: 1;
+    }
+    .logo-img {
+        height: 40px;
+    }
+    .logo-text {
+        font-size: 1.4rem;
+    }
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 12px;
+    }
+    .header__actions {
+        order: 2;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    .header__actions .btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+    }
+    /* Penyesuaian konten edukasi di HP */
+    .edukasi-container {
+        padding: 30px 0;
+    }
+    .featured-module {
+        padding: 20px;
+    }
+    .featured-image {
+        display: none; /* Sembunyikan gambar di HP agar konten lebih rapat */
+    }
     .stats-value {
         font-size: 1.5rem;
     }
-    .featured-image {
-        display: none;
-    }
     .card-title {
         font-size: 1rem;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10% auto;
+    }
+    .user-dropdown .dropdown-content {
+        right: auto;
+        left: 0;
+    }
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+    .footer-col ul {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-module {
+        padding: 16px;
+    }
+    .featured-content h2 {
+        font-size: 1.2rem;
+    }
+    .btn-featured {
+        width: 100%;
+        text-align: center;
+    }
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+    .card-content {
+        padding: 16px;
     }
 }

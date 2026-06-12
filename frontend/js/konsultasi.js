@@ -121,7 +121,6 @@ function updateEvidence() {
   document.getElementById("evidenceActivity").innerHTML = activity;
   document.getElementById("evidenceIntensitas").innerHTML = intensitas;
 }
-// Hanya menggunakan event 'input' untuk menghindari konflik perubahan nilai
 document
   .querySelectorAll(
     '#weight, #height, #calories, #fat_harian, #carbo_harian, #activity_duration, input[name="intensity"]'
@@ -544,19 +543,18 @@ function updateCartSummary() {
     totalCarbo.toFixed(1) + " g";
 }
 
-// ==================== SUBMIT ANALISIS ====================
+// ==================== SUBMIT ANALISIS (GUEST ALLOWED) ====================
 const form = document.getElementById("consultationForm");
 const resultModal = document.getElementById("resultModal");
 
-let isSubmitting = false; // flag untuk mencegah double submit
+let isSubmitting = false;
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (isSubmitting) return;
   isSubmitting = true;
 
-  // Optional: disable tombol submit jika ada
-  const submitBtn = document.querySelector("#submitBtn");
+  const submitBtn = document.querySelector(".btn-submit");
   if (submitBtn) submitBtn.disabled = true;
 
   const weight = parseFloat(document.getElementById("weight").value);
@@ -591,7 +589,7 @@ form.addEventListener("submit", async (e) => {
   if (isNaN(totalLemak) || totalLemak <= 0)
     errors.push("• Lemak harian harus diisi angka positif");
   if (isNaN(totalKarbohidrat) || totalKarbohidrat <= 0)
-    errors.push("• Karbohidrat harian harus diisi angka positif");
+    errors.push("• Karbohidrat harian harus diisi angka positivo");
   if (isNaN(activityDuration) || activityDuration <= 0)
     errors.push("• Durasi aktivitas harus diisi angka positif");
   if (errors.length) {
@@ -643,7 +641,7 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// ==================== REKOMENDASI DINAMIS BERDASARKAN RISK LEVEL ====================
+// ==================== REKOMENDASI DINAMIS ====================
 function buatRekomendasiDinamis(categories, riskLevel) {
   const recs = [];
   const isUnderweight = categories.bmi === "underweight";
@@ -713,7 +711,6 @@ function buatRekomendasiDinamis(categories, riskLevel) {
       "🍚 Pastikan asupan karbohidrat cukup untuk energi, terutama jika aktif."
     );
 
-  // Rekomendasi berdasarkan level risiko (tanpa skor)
   if (riskLevel === "TINGGI") {
     recs.push(
       "🩺 Segera konsultasikan kondisi Anda ke dokter atau ahli gizi untuk evaluasi lebih lanjut."
@@ -737,7 +734,6 @@ function buatRekomendasiDinamis(categories, riskLevel) {
   return [...new Map(recs.map((item) => [item, item])).values()];
 }
 
-// ==================== INSIGHT METABOLISM YANG LEBIH BERAGAM ====================
 function generateInsightMessage(categories, riskLevel, tdee, totalKalori) {
   const bmi = categories.bmi;
   const kalori = categories.kalori;
@@ -782,7 +778,6 @@ function generateInsightMessage(categories, riskLevel, tdee, totalKalori) {
   }
   
   // RISIKO SEDANG
-  // Buat pesan spesifik berdasarkan kombinasi
   if (isActiveHeavy && (kaloriLow || kalori === "cukup")) {
     return "🏋️ Aktivitas berat Anda sudah sangat baik, namun pastikan asupan kalori mencukupi (terutama jika ingin menaikkan berat badan atau mempertahankan energi). Perhatikan juga komposisi gizi.";
   }
@@ -813,11 +808,9 @@ function generateInsightMessage(categories, riskLevel, tdee, totalKalori) {
   if (bmi === "normal" && kaloriLow && isActiveHeavy) {
     return "⚠️ Defisit kalori + aktivitas berat meski BMI normal dapat menyebabkan kelelahan dan defisiensi energi. Tingkatkan asupan kalori agar seimbang.";
   }
-  // Default untuk risiko sedang
   return "📊 Risiko sedang. Perbaiki pola makan (kurangi lemak jenuh/gula, perbanyak sayur) dan penuhi rekomendasi aktivitas fisik (150-300 menit/minggu).";
 }
 
-// ==================== REKOMENDASI EDUKASI (FILTER LEBIH KETAT) ====================
 function estimasiMenitBaca(konten) {
   if (!konten) return 5;
   const plainText = konten.replace(/<[^>]*>/g, "");
@@ -841,71 +834,9 @@ async function getEdukasiRecommendations(
     const isOverweightOrObese =
       bmiCategory === "Overweight" || bmiCategory === "Obesitas";
 
-    // ========== UNDERWEIGHT ==========
     if (isUnderweight) {
       const forbiddenForUnderweight = [
-        "defisit kalori",
-        "defisit",
-        "penurunan berat badan",
-        "penurunan berat",
-        "kurangi kalori",
-        "diet ketat",
-        "low calorie",
-        "menurunkan berat badan",
-        "kelebihan kalori",
-        "kelebihan berat",
-        "overweight",
-        "obesitas",
-        "tips mengurangi",
-        "kurangi asupan",
-        "defisit energi",
-        "bahaya kalori",
-        "kontrol kalori",
-        "batasi kalori",
-        "kurangi porsi",
-        "lemak jenuh",
-        "kolesterol",
-        "atlet",
-        "serat larut",
-        "indeks glikemik",
-        "beban glikemik",
-        "stres",
-        "makan emosional",
-        "emotional eating",
-        "ngemil",
-        "craving",
-        "makan berlebih",
-        "berat badan berlebih",
-        "kebiasaan makan",
-        "psikologis",
-        "manajemen stres",
-        "stres makan",
-        "binge eating",
-        "diabetes",
-        "gula darah",
-        "insulin",
-        "glukosa",
-        "hiperglikemia",
-        "hipoglikemia",
-        "diabetes tipe 2",
-        "diabetes melitus",
-        "kadar gula",
-        "pengendalian gula",
-        "termogenik",
-        "thermogenesis",
-        "cabai",
-        "capsaicin",
-        "teh hijau",
-        "katekin",
-        "kopi",
-        "kafein",
-        "jahe",
-        "kunyit",
-        "makanan pembakar lemak",
-        "bakar kalori",
-        "peningkatan metabolisme",
-        "meningkatkan metabolisme",
-        "makanan peningkat metabolisme",
+        "defisit kalori","defisit","penurunan berat badan","penurunan berat","kurangi kalori","diet ketat","low calorie","menurunkan berat badan","kelebihan kalori","kelebihan berat","overweight","obesitas","tips mengurangi","kurangi asupan","defisit energi","bahaya kalori","kontrol kalori","batasi kalori","kurangi porsi","lemak jenuh","kolesterol","atlet","serat larut","indeks glikemik","beban glikemik","stres","makan emosional","emotional eating","ngemil","craving","makan berlebih","berat badan berlebih","kebiasaan makan","psikologis","manajemen stres","stres makan","binge eating","diabetes","gula darah","insulin","glukosa","hiperglikemia","hipoglikemia","diabetes tipe 2","diabetes melitus","kadar gula","pengendalian gula","termogenik","thermogenesis","cabai","capsaicin","teh hijau","katekin","kopi","kafein","jahe","kunyit","makanan pembakar lemak","bakar kalori","peningkatan metabolisme","meningkatkan metabolisme","makanan peningkat metabolisme"
       ];
       let filteredMateri = semuaMateri.filter((materi) => {
         const text = (
@@ -920,113 +851,50 @@ async function getEdukasiRecommendations(
       filteredMateri.sort((a, b) => {
         const aText = (a.judul + " " + (a.subtitle || "")).toLowerCase();
         const bText = (b.judul + " " + (b.subtitle || "")).toLowerCase();
-        const aBonus =
-          aText.includes("menambah berat badan") ||
-          aText.includes("meningkatkan berat badan") ||
-          aText.includes("berat badan ideal") ||
-          aText.includes("kenaikan berat badan")
-            ? 100
-            : 0;
-        const bBonus =
-          bText.includes("menambah berat badan") ||
-          bText.includes("meningkatkan berat badan") ||
-          bText.includes("berat badan ideal") ||
-          bText.includes("kenaikan berat badan")
-            ? 100
-            : 0;
+        const aBonus = aText.includes("menambah berat badan") || aText.includes("meningkatkan berat badan") || aText.includes("berat badan ideal") || aText.includes("kenaikan berat badan") ? 100 : 0;
+        const bBonus = bText.includes("menambah berat badan") || bText.includes("meningkatkan berat badan") || bText.includes("berat badan ideal") || bText.includes("kenaikan berat badan") ? 100 : 0;
         return bBonus - aBonus;
       });
       return filteredMateri.slice(0, 5);
     }
 
-    // ========== NON-UNDERWEIGHT ==========
-    const diabetesBlacklist = [
-      "diabetes",
-      "gula darah",
-      "insulin",
-      "glukosa",
-      "hiperglikemia",
-      "hipoglikemia",
-      "diabetes tipe 2",
-      "diabetes melitus",
-      "kadar gula",
-    ];
-    const weightGainBlacklist = [
-      "menambah berat badan",
-      "meningkatkan berat badan",
-      "kenaikan berat badan",
-      "naikkan berat badan",
-      "menaikkan berat badan",
-      "nafsu makan",
-      "cara menambah berat badan",
-      "menaikkan massa",
-      "tambah nafsu makan",
-    ];
+    const diabetesBlacklist = ["diabetes","gula darah","insulin","glukosa","hiperglikemia","hipoglikemia","diabetes tipe 2","diabetes melitus","kadar gula"];
+    const weightGainBlacklist = ["menambah berat badan","meningkatkan berat badan","kenaikan berat badan","naikkan berat badan","menaikkan berat badan","nafsu makan","cara menambah berat badan","menaikkan massa","tambah nafsu makan"];
 
     const prioritasKategori = [];
-    if (categories.kalori === "tinggi")
-      prioritasKategori.push("makanan", "minuman");
-    if (categories.karbohidrat === "tinggi")
-      prioritasKategori.push("karbohidrat");
-    if (riskLevel === "TINGGI") prioritasKategori.push("metabolisme", "tips");
+    if (categories.kalori === "tinggi") prioritasKategori.push("makanan","minuman");
+    if (categories.karbohidrat === "tinggi") prioritasKategori.push("karbohidrat");
+    if (riskLevel === "TINGGI") prioritasKategori.push("metabolisme","tips");
     if (riskLevel === "SEDANG") prioritasKategori.push("tips");
-    if (bmiCategory === "Obesitas" || bmiCategory === "Overweight")
-      prioritasKategori.push("makanan", "tips");
+    if (bmiCategory === "Obesitas" || bmiCategory === "Overweight") prioritasKategori.push("makanan","tips");
     const uniquePrioritas = [...new Set(prioritasKategori)];
 
     let materiDenganSkor = [];
     for (let materi of semuaMateri) {
       let score = 0;
-      const textToCheck = (
-        materi.judul +
-        " " +
-        (materi.konten || "") +
-        " " +
-        (materi.subtitle || "")
-      ).toLowerCase();
+      const textToCheck = (materi.judul + " " + (materi.konten || "") + " " + (materi.subtitle || "")).toLowerCase();
       const kategori = (materi.kategori || "").toLowerCase();
 
-      // Blacklist diabetes
-      if (diabetesBlacklist.some((kw) => textToCheck.includes(kw.toLowerCase()))) {
-        score -= 100;
-      }
-      // Blacklist weight gain
-      if (
-        weightGainBlacklist.some((kw) => textToCheck.includes(kw.toLowerCase()))
-      ) {
-        score -= 100;
-      }
+      if (diabetesBlacklist.some((kw) => textToCheck.includes(kw.toLowerCase()))) score -= 100;
+      if (weightGainBlacklist.some((kw) => textToCheck.includes(kw.toLowerCase()))) score -= 100;
 
-      // Skor berdasarkan kategori
       if (kategori === "metabolisme" && riskLevel === "TINGGI") score += 25;
       if (kategori === "tips" && riskLevel !== "RENDAH") score += 15;
-      if (
-        kategori === "makanan" &&
-        (categories.kalori === "tinggi" || categories.lemak === "tinggi")
-      )
-        score += 20;
-      if (kategori === "karbohidrat" && categories.karbohidrat === "tinggi")
-        score += 20;
+      if (kategori === "makanan" && (categories.kalori === "tinggi" || categories.lemak === "tinggi")) score += 20;
+      if (kategori === "karbohidrat" && categories.karbohidrat === "tinggi") score += 20;
       if (kategori === "minuman" && categories.kalori === "tinggi") score += 15;
 
       let keywords = [];
-      if (riskLevel === "TINGGI")
-        keywords.push("metabolisme", "risiko", "lemak");
-      else if (riskLevel === "SEDANG")
-        keywords.push("pola makan", "karbohidrat", "sehat");
-      else keywords.push("pertahankan", "seimbang", "gaya hidup sehat");
+      if (riskLevel === "TINGGI") keywords.push("metabolisme","risiko","lemak");
+      else if (riskLevel === "SEDANG") keywords.push("pola makan","karbohidrat","sehat");
+      else keywords.push("pertahankan","seimbang","gaya hidup sehat");
 
-      if (bmiCategory === "Obesitas")
-        keywords.push("obesitas", "penurunan berat badan");
-      else if (bmiCategory === "Overweight")
-        keywords.push("berat badan ideal", "diet seimbang", "penurunan berat badan");
+      if (bmiCategory === "Obesitas") keywords.push("obesitas","penurunan berat badan");
+      else if (bmiCategory === "Overweight") keywords.push("berat badan ideal","diet seimbang","penurunan berat badan");
 
-      if (categories.kalori === "tinggi")
-        keywords.push("kontrol kalori", "defisit kalori");
-      if (categories.lemak === "tinggi")
-        keywords.push("lemak jenuh", "lemak sehat");
-      if (categories.karbohidrat === "tinggi")
-        keywords.push("karbohidrat kompleks", "gula tambahan");
+      if (categories.kalori === "tinggi") keywords.push("kontrol kalori","defisit kalori");
+      if (categories.lemak === "tinggi") keywords.push("lemak jenuh","lemak sehat");
+      if (categories.karbohidrat === "tinggi") keywords.push("karbohidrat kompleks","gula tambahan");
 
       for (let kw of keywords) {
         if (textToCheck.includes(kw.toLowerCase())) score += 5;
@@ -1034,99 +902,24 @@ async function getEdukasiRecommendations(
 
       if (uniquePrioritas.includes(kategori)) score += 10;
 
-      // Filter khusus overweight/obesitas
       if (isOverweightOrObese) {
-        const maintenanceKeywords = [
-          "setelah turun",
-          "plateau",
-          "yo-yo",
-          "mempertahankan berat badan",
-          "menjaga berat badan",
-          "stabilisasi berat badan",
-          "mencegah yo-yo",
-          "setelah penurunan",
-          "fase maintenance",
-        ];
-        if (
-          maintenanceKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))
-        ) {
-          score -= 100;
-        }
-
-        const lowPriorityKeywords = [
-          "probiotik",
-          "prebiotik",
-          "mikrobioma",
-          "bakteri usus",
-          "kesehatan usus",
-          "fermentasi",
-          "yogurt",
-          "kefir",
-          "kimchi",
-          "tempe",
-          "miso",
-        ];
-        if (
-          lowPriorityKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))
-        )
-          score -= 100;
-
-        const termogenikKeywords = [
-          "termogenik",
-          "thermogenesis",
-          "cabai",
-          "capsaicin",
-          "teh hijau",
-          "katekin",
-          "kopi",
-          "kafein",
-          "jahe",
-          "kunyit",
-          "makanan pembakar lemak",
-          "bakar kalori",
-          "peningkatan metabolisme",
-          "meningkatkan metabolisme",
-          "makanan peningkat metabolisme",
-        ];
-        if (
-          termogenikKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))
-        )
-          score -= 100;
-
-        const highPriorityKeywords = [
-          "defisit kalori",
-          "kurangi kalori",
-          "kontrol kalori",
-          "batasi kalori",
-          "porsi makan",
-          "manajemen porsi",
-          "metode piring",
-          "ukuran porsi",
-          "penurunan berat badan",
-          "berat badan ideal",
-          "diet sehat",
-        ];
+        const maintenanceKeywords = ["setelah turun","plateau","yo-yo","mempertahankan berat badan","menjaga berat badan","stabilisasi berat badan","mencegah yo-yo","setelah penurunan","fase maintenance"];
+        if (maintenanceKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))) score -= 100;
+        const lowPriorityKeywords = ["probiotik","prebiotik","mikrobioma","bakteri usus","kesehatan usus","fermentasi","yogurt","kefir","kimchi","tempe","miso"];
+        if (lowPriorityKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))) score -= 100;
+        const termogenikKeywords = ["termogenik","thermogenesis","cabai","capsaicin","teh hijau","katekin","kopi","kafein","jahe","kunyit","makanan pembakar lemak","bakar kalori","peningkatan metabolisme","meningkatkan metabolisme","makanan peningkat metabolisme"];
+        if (termogenikKeywords.some((kw) => textToCheck.includes(kw.toLowerCase()))) score -= 100;
+        const highPriorityKeywords = ["defisit kalori","kurangi kalori","kontrol kalori","batasi kalori","porsi makan","manajemen porsi","metode piring","ukuran porsi","penurunan berat badan","berat badan ideal","diet sehat"];
         for (let kw of highPriorityKeywords) {
-          if (textToCheck.includes(kw.toLowerCase())) {
-            score += 25;
-            break;
-          }
+          if (textToCheck.includes(kw.toLowerCase())) { score += 25; break; }
         }
       }
-
       materiDenganSkor.push({ materi, score, kategori });
     }
 
-    // Filter pasca-penskoran (pastikan tidak ada materi weight gain)
     if (!isUnderweight) {
       materiDenganSkor = materiDenganSkor.filter((item) => {
-        const text = (
-          item.materi.judul +
-          " " +
-          (item.materi.subtitle || "") +
-          " " +
-          (item.materi.konten || "")
-        ).toLowerCase();
+        const text = (item.materi.judul + " " + (item.materi.subtitle || "") + " " + (item.materi.konten || "")).toLowerCase();
         return !weightGainBlacklist.some((kw) => text.includes(kw.toLowerCase()));
       });
     }
@@ -1144,8 +937,7 @@ async function getEdukasiRecommendations(
         (item) =>
           item.kategori === kategori &&
           !selected.includes(item.materi) &&
-          (!categoryCount[item.kategori] ||
-            categoryCount[item.kategori] < MAX_PER_CATEGORY)
+          (!categoryCount[item.kategori] || categoryCount[item.kategori] < MAX_PER_CATEGORY)
       );
       for (let item of dariKategori.slice(0, jumlah)) {
         selected.push(item.materi);
@@ -1166,8 +958,7 @@ async function getEdukasiRecommendations(
       const sisa = materiDenganSkor.filter(
         (item) =>
           !selected.includes(item.materi) &&
-          (!categoryCount[item.kategori] ||
-            categoryCount[item.kategori] < MAX_PER_CATEGORY)
+          (!categoryCount[item.kategori] || categoryCount[item.kategori] < MAX_PER_CATEGORY)
       );
       for (let item of sisa) {
         if (selected.length >= targetTotal) break;
@@ -1177,7 +968,6 @@ async function getEdukasiRecommendations(
     }
 
     if (selected.length > targetTotal) selected = selected.slice(0, targetTotal);
-
     return selected;
   } catch (err) {
     console.error("Error in getEdukasiRecommendations:", err);
@@ -1185,45 +975,29 @@ async function getEdukasiRecommendations(
   }
 }
 
-// ==================== DISPLAY RESULT MODAL (TANPA SKOR) ====================
+// ==================== DISPLAY RESULT MODAL (URUTAN DIPERBAIKI) ====================
 function displayResultModal(data) {
   const categories = data.categories || {};
   const explanation = data.explanation || "Tidak ada penjelasan.";
   const trace = data.trace || [];
   const tdee = data.tdee || 0;
 
-  // ========== NORMALISASI BMI ==========
   const rawBmi = (categories.bmi || "").toLowerCase();
   let bmiKey = "";
   if (rawBmi === "obesitas" || rawBmi === "obese") bmiKey = "obesitas";
   else if (rawBmi === "overweight") bmiKey = "overweight";
-  else if (rawBmi === "underweight" || rawBmi === "kurus")
-    bmiKey = "underweight";
+  else if (rawBmi === "underweight" || rawBmi === "kurus") bmiKey = "underweight";
   else bmiKey = "normal";
 
-  const normalizedCategories = {
-    ...categories,
-    bmi: bmiKey,
-  };
+  const normalizedCategories = { ...categories, bmi: bmiKey };
 
   let finalRiskLevel = (data.risk_level || "").toUpperCase();
-  if (
-    !finalRiskLevel ||
-    (finalRiskLevel !== "TINGGI" &&
-      finalRiskLevel !== "SEDANG" &&
-      finalRiskLevel !== "RENDAH")
-  ) {
+  if (!finalRiskLevel || (finalRiskLevel !== "TINGGI" && finalRiskLevel !== "SEDANG" && finalRiskLevel !== "RENDAH")) {
     finalRiskLevel = "SEDANG";
   }
 
-  const riskColor =
-    finalRiskLevel === "TINGGI"
-      ? "#E53935"
-      : finalRiskLevel === "SEDANG"
-      ? "#FFB300"
-      : "#43A047";
+  const riskColor = finalRiskLevel === "TINGGI" ? "#E53935" : finalRiskLevel === "SEDANG" ? "#FFB300" : "#43A047";
 
-  // Rekomendasi dinamis berdasarkan risk level (tanpa skor)
   const dynamicRecs = buatRekomendasiDinamis(normalizedCategories, finalRiskLevel);
   const backendRecs = data.recommendations || [];
   const allRecs = [...backendRecs, ...dynamicRecs];
@@ -1233,64 +1007,35 @@ function displayResultModal(data) {
   const bmiCategory = getBMICategory();
   const totalKalori = parseFloat(document.getElementById("calories").value) || 0;
   const totalLemak = parseFloat(document.getElementById("fat_harian").value) || 0;
-  const totalKarbohidrat =
-    parseFloat(document.getElementById("carbo_harian").value) || 0;
+  const totalKarbohidrat = parseFloat(document.getElementById("carbo_harian").value) || 0;
   const activity = parseInt(document.getElementById("activity_duration").value) || 0;
   const intensitas = getIntensitasText();
 
   function getCategoryBadge(cat, type) {
-    let label = "",
-      bgColor = "",
-      textColor = "",
-      borderColor = "",
-      icon = "";
+    let label = "", bgColor = "", textColor = "", borderColor = "", icon = "";
     if (cat === "tinggi") {
-      label = "Tinggi";
-      bgColor = "#FEF2F2";
-      textColor = "#B91C1C";
-      borderColor = "#FEE2E2";
-      icon =
-        '<i class="fas fa-arrow-up" style="font-size: 0.7rem; margin-right: 4px;"></i>';
+      label = "Tinggi"; bgColor = "#FEF2F2"; textColor = "#B91C1C"; borderColor = "#FEE2E2"; icon = '<i class="fas fa-arrow-up" style="font-size: 0.7rem; margin-right: 4px;"></i>';
     } else if (cat === "rendah") {
-      label = "Rendah";
-      bgColor = "#ECFDF5";
-      textColor = "#065F46";
-      borderColor = "#D1FAE5";
-      icon =
-        '<i class="fas fa-arrow-down" style="font-size: 0.7rem; margin-right: 4px;"></i>';
+      label = "Rendah"; bgColor = "#ECFDF5"; textColor = "#065F46"; borderColor = "#D1FAE5"; icon = '<i class="fas fa-arrow-down" style="font-size: 0.7rem; margin-right: 4px;"></i>';
     } else {
-      label = "Cukup";
-      bgColor = "#FFFBEB";
-      textColor = "#B45309";
-      borderColor = "#FEF3C7";
-      icon =
-        '<i class="fas fa-check-circle" style="font-size: 0.7rem; margin-right: 4px;"></i>';
+      label = "Cukup"; bgColor = "#FFFBEB"; textColor = "#B45309"; borderColor = "#FEF3C7"; icon = '<i class="fas fa-check-circle" style="font-size: 0.7rem; margin-right: 4px;"></i>';
     }
     return `<span class="nutri-badge" style="display: inline-flex; align-items: center; gap: 4px; background: ${bgColor}; color: ${textColor}; padding: 4px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; border: 1px solid ${borderColor}; line-height: 1.2;">${icon}${label}</span>`;
   }
 
   function getInterpretationMessage(cat, type, value) {
     if (cat === "tinggi") {
-      if (type === "kalori")
-        return `Asupan kalori (${value} kkal) melebihi kebutuhan (${tdee} kkal). Kelebihan kalori dapat menambah berat badan.`;
-      if (type === "lemak")
-        return `Asupan lemak (${value} g) terlalu tinggi. Kurangi lemak jenuh, pilih lemak sehat.`;
-      if (type === "karbohidrat")
-        return `Karbohidrat (${value} g) berlebih. Pilih karbohidrat kompleks.`;
+      if (type === "kalori") return `Asupan kalori (${value} kkal) melebihi kebutuhan (${tdee} kkal). Kelebihan kalori dapat menambah berat badan.`;
+      if (type === "lemak") return `Asupan lemak (${value} g) terlalu tinggi. Kurangi lemak jenuh, pilih lemak sehat.`;
+      if (type === "karbohidrat") return `Karbohidrat (${value} g) berlebih. Pilih karbohidrat kompleks.`;
     } else if (cat === "rendah") {
-      if (type === "kalori")
-        return `Asupan kalori (${value} kkal) kurang dari kebutuhan (${tdee} kkal). Perbanyak porsi makan.`;
-      if (type === "lemak")
-        return `Asupan lemak (${value} g) rendah. Konsumsi lemak sehat seperti alpukat, kacang.`;
-      if (type === "karbohidrat")
-        return `Karbohidrat (${value} g) rendah. Tambahkan karbohidrat kompleks untuk energi.`;
+      if (type === "kalori") return `Asupan kalori (${value} kkal) kurang dari kebutuhan (${tdee} kkal). Perbanyak porsi makan.`;
+      if (type === "lemak") return `Asupan lemak (${value} g) rendah. Konsumsi lemak sehat seperti alpukat, kacang.`;
+      if (type === "karbohidrat") return `Karbohidrat (${value} g) rendah. Tambahkan karbohidrat kompleks untuk energi.`;
     } else {
-      if (type === "kalori")
-        return `Asupan kalori (${value} kkal) seimbang dengan kebutuhan. Pertahankan.`;
-      if (type === "lemak")
-        return `Asupan lemak (${value} g) cukup. Pastikan sumber lemak sehat.`;
-      if (type === "karbohidrat")
-        return `Asupan karbohidrat (${value} g) cukup. Prioritaskan karbohidrat kompleks.`;
+      if (type === "kalori") return `Asupan kalori (${value} kkal) seimbang dengan kebutuhan. Pertahankan.`;
+      if (type === "lemak") return `Asupan lemak (${value} g) cukup. Pastikan sumber lemak sehat.`;
+      if (type === "karbohidrat") return `Asupan karbohidrat (${value} g) cukup. Prioritaskan karbohidrat kompleks.`;
     }
     return "";
   }
@@ -1302,47 +1047,25 @@ function displayResultModal(data) {
   let summaryInterpretation = "";
   const kaloriMsg = getInterpretationMessage(kaloriCat, "kalori", totalKalori);
   const lemakMsg = getInterpretationMessage(lemakCat, "lemak", totalLemak);
-  const karboMsg = getInterpretationMessage(
-    karboCat,
-    "karbohidrat",
-    totalKarbohidrat
-  );
+  const karboMsg = getInterpretationMessage(karboCat, "karbohidrat", totalKarbohidrat);
   if (kaloriMsg) summaryInterpretation += `• ${kaloriMsg}<br>`;
   if (lemakMsg) summaryInterpretation += `• ${lemakMsg}<br>`;
   if (karboMsg) summaryInterpretation += `• ${karboMsg}<br>`;
-
   if (explanation && explanation !== "Tidak ada penjelasan.") {
     summaryInterpretation += `<br><strong>Kesimpulan sistem pakar:</strong> ${explanation}`;
   }
-  if (summaryInterpretation === "") {
-    summaryInterpretation = "Tidak ada catatan khusus untuk asupan gizi Anda.";
-  }
+  if (summaryInterpretation === "") summaryInterpretation = "Tidak ada catatan khusus untuk asupan gizi Anda.";
 
-  // GENERATE INSIGHT YANG LEBIH BERAGAM
   const insightMessage = generateInsightMessage(normalizedCategories, finalRiskLevel, tdee, totalKalori);
 
   let tdeeInfo = "";
   if (tdee > 0) {
     const persen = ((totalKalori / tdee) * 100).toFixed(0);
-    // Gunakan istilah Defisit / Seimbang / Surplus
-    let statusClass = "";
-    let statusText = "";
-    if (persen < 80) {
-      statusClass = "defisit";
-      statusText = "Defisit Kalori";
-    } else if (persen > 120) {
-      statusClass = "surplus";
-      statusText = "Surplus Kalori";
-    } else {
-      statusClass = "seimbang";
-      statusText = "Seimbang";
-    }
-    tdeeInfo = `<div class="tdee-info">
-        <p><strong>Kebutuhan Kalori (TDEE):</strong> ${tdee.toFixed(0)} kkal/hari</p>
-        <p><strong>Persentase asupan terhadap kebutuhan:</strong> ${persen}% 
-          <span class="status-badge status-${statusClass}">${statusText}</span>
-        </p>
-      </div>`;
+    let statusClass = "", statusText = "";
+    if (persen < 80) { statusClass = "defisit"; statusText = "Defisit Kalori"; }
+    else if (persen > 120) { statusClass = "surplus"; statusText = "Surplus Kalori"; }
+    else { statusClass = "seimbang"; statusText = "Seimbang"; }
+    tdeeInfo = `<div class="tdee-info"><p><strong>Kebutuhan Kalori (TDEE):</strong> ${tdee.toFixed(0)} kkal/hari</p><p><strong>Persentase asupan terhadap kebutuhan:</strong> ${persen}% <span class="status-badge status-${statusClass}">${statusText}</span></p></div>`;
   }
 
   let traceHtml = "";
@@ -1350,13 +1073,9 @@ function displayResultModal(data) {
     let traceSteps = "";
     trace.forEach((t) => {
       if (t.rule_id) {
-        traceSteps += `<div class="trace-step"><div class="trace-icon"><i class="fas fa-code-branch"></i></div><div class="trace-content"><div class="trace-title">Aturan ${t.rule_id} (Prioritas ${t.priority})</div><div class="trace-condition">Kondisi: ${JSON.stringify(
-          t.conditions
-        )} → Kesimpulan: ${t.conclusion}</div></div></div>`;
+        traceSteps += `<div class="trace-step"><div class="trace-icon"><i class="fas fa-code-branch"></i></div><div class="trace-content"><div class="trace-title">Aturan ${t.rule_id} (Prioritas ${t.priority})</div><div class="trace-condition">Kondisi: ${JSON.stringify(t.conditions)} → Kesimpulan: ${t.conclusion}</div></div></div>`;
       } else {
-        traceSteps += `<div class="trace-step"><div class="trace-content">${
-          t.info || "Tidak ada aturan cocok, menggunakan default"
-        }</div></div>`;
+        traceSteps += `<div class="trace-step"><div class="trace-content">${t.info || "Tidak ada aturan cocok, menggunakan default"}</div></div>`;
       }
     });
     traceHtml = `<div class="trace-section"><h3 class="section-title"><i class="fas fa-code-branch"></i> Forward Chaining Trace</h3><div class="trace-chain">${traceSteps}</div></div>`;
@@ -1364,57 +1083,56 @@ function displayResultModal(data) {
 
   let recsHtml = "";
   if (uniqueRecs.length > 0) {
-    recsHtml = `<div class="recommendations-section"><h3 class="section-title"><i class="fas fa-clipboard-list"></i> Rekomendasi</h3><ul class="recommendations-list">${uniqueRecs
-      .map((r) => `<li>${r}</li>`)
-      .join("")}</ul></div>`;
+    recsHtml = `<div class="recommendations-section"><h3 class="section-title"><i class="fas fa-clipboard-list"></i> Rekomendasi</h3><ul class="recommendations-list">${uniqueRecs.map(r => `<li>${r}</li>`).join("")}</ul></div>`;
   }
 
+  // GUEST WARNING HTML
+  const guestWarningHtml = !currentUser ? `
+    <div class="guest-warning" style="background: #FFF8E1; border-left: 4px solid #FFB300; padding: 12px 16px; border-radius: 16px; margin: 16px 0; display: flex; align-items: center; gap: 12px; font-size: 0.85rem;">
+      <i class="fas fa-exclamation-triangle" style="color: #FFB300; font-size: 1.2rem;"></i>
+      <span><strong>Perhatian:</strong> Karena Anda tidak login, hasil analisis ini tidak akan tersimpan di riwayat. <a href="login.html" style="color: #1E88E5; text-decoration: underline;">Login atau daftar</a> untuk menyimpan dan memantau perkembangan Anda.</span>
+    </div>
+  ` : "";
+
+  // CONTENT TANPA CTA RESULT (AKAN DITAMBAHKAN SETELAH EDUKASI)
   const content = `
     <div class="result-header"><h2><i class="fas fa-chart-bar"></i> Hasil Analisis Forward Chaining</h2><p class="result-subtitle">Status Kesehatan Metabolik Anda</p></div>
     <div class="result-body">
         <p class="result-intro">Berdasarkan data yang Anda berikan, sistem pakar GLISIA menggunakan metode <strong>Forward Chaining</strong> untuk memproses aturan medis dan menyimpulkan profil risiko Anda.</p>
+        ${guestWarningHtml}
         <div class="factors-section"><h3 class="section-title"><i class="fas fa-chart-pie"></i> Faktor Penentu Utama</h3><div class="factors-grid">
             <div class="factor-card"><div class="factor-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="factor-info"><div class="factor-label">Risk Level</div><div class="factor-value" style="color:${riskColor};">${finalRiskLevel}</div></div></div>
             <div class="factor-card"><div class="factor-icon"><i class="fas fa-weight-scale"></i></div><div class="factor-info"><div class="factor-label">Indeks Massa Tubuh</div><div class="factor-value">${bmiValue} (${bmiCategory})</div></div></div>
-            <div class="factor-card"><div class="factor-icon"><i class="fas fa-chart-line"></i></div><div class="factor-info"><div class="factor-label">Asupan Kalori</div><div class="factor-value">${totalKalori} kkal ${getCategoryBadge(
-    kaloriCat,
-    "kalori"
-  )}</div></div></div>
+            <div class="factor-card"><div class="factor-icon"><i class="fas fa-chart-line"></i></div><div class="factor-info"><div class="factor-label">Asupan Kalori</div><div class="factor-value">${totalKalori} kkal ${getCategoryBadge(kaloriCat, "kalori")}</div></div></div>
         </div></div>
         <div class="data-summary">
-            <div class="summary-item"><span>🔥 Kalori Harian</span><strong>${totalKalori} kkal ${getCategoryBadge(
-    kaloriCat,
-    "kalori"
-  )}</strong></div>
-            <div class="summary-item"><span>🧈 Lemak Harian</span><strong>${totalLemak} g ${getCategoryBadge(
-    lemakCat,
-    "lemak"
-  )}</strong></div>
-            <div class="summary-item"><span>🍚 Karbohidrat Harian</span><strong>${totalKarbohidrat} g ${getCategoryBadge(
-    karboCat,
-    "karbohidrat"
-  )}</strong></div>
+            <div class="summary-item"><span>🔥 Kalori Harian</span><strong>${totalKalori} kkal ${getCategoryBadge(kaloriCat, "kalori")}</strong></div>
+            <div class="summary-item"><span>🧈 Lemak Harian</span><strong>${totalLemak} g ${getCategoryBadge(lemakCat, "lemak")}</strong></div>
+            <div class="summary-item"><span>🍚 Karbohidrat Harian</span><strong>${totalKarbohidrat} g ${getCategoryBadge(karboCat, "karbohidrat")}</strong></div>
             <div class="summary-item"><span>🏃 Aktivitas</span><strong>${activity} menit/minggu (${intensitas})</strong></div>
             <div class="summary-item"><span>⚖️ BMI</span><strong>${bmiValue} (${bmiCategory})</strong></div>
         </div>
         ${tdeeInfo}
         <div class="insight-card"><h4><i class="fas fa-lightbulb"></i> Insight Metabolisme</h4><p>${insightMessage}</p></div>
         ${recsHtml}${traceHtml}
-        <div class="cta-result"><h3>Siap Memulai Transformasi Kesehatan Anda?</h3><p>Pantau progres Anda setiap hari dan lihat bagaimana perubahan kecil membawa dampak besar pada metabolisme Anda.</p><div class="cta-buttons"><button class="btn-outline-primary" id="lihatRiwayatBtn"><i class="fas fa-chart-line"></i> Lihat Riwayat Tren</button><button class="btn-primary" id="eksplorasiEdukasiBtn"><i class="fas fa-graduation-cap"></i> Eksplorasi Materi Edukasi</button></div></div>
-        <div class="result-actions"><button class="btn-outline-primary" id="printResultBtn"><i class="fas fa-print"></i> Cetak Hasil</button><button class="btn-primary" id="closeResultBtn"><i class="fas fa-check-circle"></i> Selesai</button></div>
+        <!-- Placeholder untuk edukasi dan CTA -->
+        <div id="eduAndCtaPlaceholder"></div>
+        <div class="result-actions">
+            <button class="btn-outline-primary" id="printResultBtn"><i class="fas fa-print"></i> Cetak Hasil</button>
+            <button class="btn-primary" id="closeResultBtn"><i class="fas fa-check-circle"></i> Selesai</button>
+        </div>
     </div>
   `;
 
   document.getElementById("resultContentModal").innerHTML = content;
 
-  // Rekomendasi edukasi
+  // Event untuk print & close
+  document.getElementById("printResultBtn")?.addEventListener("click", () => window.print());
+  document.getElementById("closeResultBtn")?.addEventListener("click", () => resultModal.style.display = "none");
+
+  // ========== REKOMENDASI EDUKASI & CTA (URUTAN: EDUKASI DULU, BARU CTA) ==========
   (async () => {
-    const edukasiList = await getEdukasiRecommendations(
-      normalizedCategories,
-      finalRiskLevel,
-      bmiCategory,
-      intensitas
-    );
+    const edukasiList = await getEdukasiRecommendations(normalizedCategories, finalRiskLevel, bmiCategory, intensitas);
     let edukasiHtml = `<div class="edukasi-recommendations"><h3 class="section-title"><i class="fas fa-graduation-cap"></i> Rekomendasi Materi Edukasi</h3>`;
     if (edukasiList.length > 0) {
       edukasiHtml += `<div class="edukasi-grid">`;
@@ -1440,14 +1158,49 @@ function displayResultModal(data) {
     }
     edukasiHtml += `</div>`;
 
-    const resultBody = document.querySelector("#resultModal .result-body");
-    const actionsDiv = resultBody.querySelector(".result-actions");
-    if (actionsDiv) {
-      actionsDiv.insertAdjacentHTML("beforebegin", edukasiHtml);
+    // CTA HTML
+    const ctaHtml = `
+      <div class="cta-result">
+        <h3>Siap Memulai Transformasi Kesehatan Anda?</h3>
+        <p>Pantau progres Anda setiap hari dan lihat bagaimana perubahan kecil membawa dampak besar pada metabolisme Anda.</p>
+        <div class="cta-buttons">
+          <button class="btn-outline-primary" id="lihatRiwayatBtn"><i class="fas fa-chart-line"></i> Lihat Riwayat Tren</button>
+          <button class="btn-primary" id="eksplorasiEdukasiBtn"><i class="fas fa-graduation-cap"></i> Eksplorasi Materi Edukasi</button>
+        </div>
+      </div>
+    `;
+
+    const placeholder = document.getElementById("eduAndCtaPlaceholder");
+    if (placeholder) {
+      // Sisipkan edukasi dulu, lalu CTA di bawahnya
+      placeholder.insertAdjacentHTML('beforebegin', edukasiHtml + ctaHtml);
+      placeholder.remove(); // hapus placeholder
     } else {
-      resultBody.insertAdjacentHTML("beforeend", edukasiHtml);
+      // fallback
+      const resultBody = document.querySelector("#resultModal .result-body");
+      const actionsDiv = resultBody.querySelector(".result-actions");
+      if (actionsDiv) {
+        actionsDiv.insertAdjacentHTML('beforebegin', edukasiHtml + ctaHtml);
+      }
     }
 
+    // Pasang event listener tombol CTA
+    document.getElementById("lihatRiwayatBtn")?.addEventListener("click", () => {
+      if (!currentUser) {
+        if (confirm("⚠️ Anda belum login. Riwayat analisis hanya tersimpan jika Anda memiliki akun.\n\nLogin sekarang untuk menyimpan hasil ini dan lihat riwayat lengkap Anda.\n\nKlik OK untuk login, Cancel untuk kembali.")) {
+          window.location.href = "login.html";
+        }
+      } else {
+        window.location.href = "riwayat.html";
+      }
+    });
+
+    document.getElementById("eksplorasiEdukasiBtn")?.addEventListener("click", () => {
+      window.location.href = "edukasi.html";
+      resultModal.style.display = "none";
+    });
+
+    // Event untuk tombol baca edukasi
     if (edukasiList.length > 0) {
       document.querySelectorAll(".btn-edukasi-detail").forEach((btn) => {
         btn.addEventListener("click", (e) => {
@@ -1458,27 +1211,9 @@ function displayResultModal(data) {
       });
     }
   })();
-
-  document
-    .getElementById("printResultBtn")
-    ?.addEventListener("click", () => window.print());
-  document
-    .getElementById("closeResultBtn")
-    ?.addEventListener("click", () => (resultModal.style.display = "none"));
-  document
-    .getElementById("lihatRiwayatBtn")
-    ?.addEventListener("click", () => alert("Fitur riwayat akan segera hadir!"));
-  document
-    .getElementById("eksplorasiEdukasiBtn")
-    ?.addEventListener("click", () => {
-      window.location.href = "edukasi.html";
-      resultModal.style.display = "none";
-    });
 }
 
-document
-  .querySelector(".close-result")
-  ?.addEventListener("click", () => (resultModal.style.display = "none"));
+document.querySelector(".close-result")?.addEventListener("click", () => resultModal.style.display = "none");
 window.onclick = (e) => {
   if (e.target === resultModal) resultModal.style.display = "none";
   if (e.target === foodModal) foodModal.style.display = "none";
@@ -1491,9 +1226,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   attachIntensityChangeListener();
   updateEvidence();
   showStep(0);
-  document
-    .getElementById("btnLogin")
-    ?.addEventListener("click", () => (window.location.href = "login.html"));
+  document.getElementById("btnLogin")?.addEventListener("click", () => window.location.href = "login.html");
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     logout();

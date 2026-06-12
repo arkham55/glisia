@@ -6,14 +6,46 @@
     <title>GLISIA - Pusat Edukasi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS eksternal untuk edukasi (akan Anda atur sendiri) -->
     <link rel="stylesheet" href="css/edukasi.css">
+    <style>
+        /* Penyesuaian logo dan badge (sama seperti halaman konsultasi) */
+        .logo-img {
+            height: 55px;
+            width: auto;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo i {
+            display: none;
+        }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1E88E5;
+            line-height: 1;
+        }
+        /* Badge disembunyikan sepenuhnya */
+        .badge-expert {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
 <header class="header">
     <div class="container">
         <div class="header__inner">
-            <div class="logo"><i class="fas fa-apple-alt"></i> GLISIA <span class="badge-expert">EXPERT SYSTEM</span></div>
+            <div class="logo">
+                <img src="assets/images/Logo-Glisia.png" alt="GLISIA Logo" class="logo-img">
+                <span class="logo-text">GLISIA</span>
+                <!-- Badge EXPERT SYSTEM telah dihapus -->
+            </div>
             <nav class="nav">
                 <a href="index.html">Beranda</a>
                 <a href="konsultasi.html">Konsultasi</a>
@@ -120,7 +152,7 @@
     </div>
 </div>
 
-<!-- SCRIPT: Gambar otomatis & edukasi utama -->
+<!-- Script (gambar-otomatis & edukasi) -->
 <script src="js/gambar-otomatis.js"></script>
 <script src="js/edukasi.js"></script>
 </body>

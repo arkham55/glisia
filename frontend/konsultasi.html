@@ -10,6 +10,37 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/konsultasi.css">
+    <style>
+        /* Penyesuaian untuk logo gambar dan teks - VERSI DIPERBESAR (tanpa badge) */
+        .logo-img {
+            height: 55px;
+            width: auto;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            display: none;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1E88E5;
+            line-height: 1;
+        }
+
+        /* Badge disembunyikan */
+        .badge-expert {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,7 +48,11 @@
     <header class="header">
         <div class="container">
             <div class="header__inner">
-                <div class="logo"><i class="fas fa-apple-alt"></i> GLISIA <span class="badge-expert">EXPERT SYSTEM</span></div>
+                <div class="logo">
+                    <img src="assets/images/Logo-Glisia.png" alt="GLISIA Logo" class="logo-img">
+                    <span class="logo-text">GLISIA</span>
+                    <!-- Badge EXPERT SYSTEM telah dihapus -->
+                </div>
                 <nav class="nav">
                     <a href="index.html">Beranda</a>
                     <a href="konsultasi.html" class="active">Konsultasi</a>
@@ -41,7 +76,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Tombol Simpan Riwayat telah dihapus -->
                 </div>
             </div>
         </div>
@@ -241,11 +275,6 @@
                             <span>Sistem Forward Chaining mencari kecocokan antara fakta di atas dengan basis aturan medis.</span>
                         </div>
                     </div>
-                    <div class="trust-badges">
-                        <div class="badge-card"><i class="fas fa-lock"></i><span>PRIVASI TERJAMIN</span></div>
-                        <div class="badge-card"><i class="fas fa-stethoscope"></i><span>DATA MEDIS AKURAT</span></div>
-                        <div class="badge-card"><i class="fas fa-chart-line"></i><span>STANDARD WHO 2024</span></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -263,7 +292,7 @@
             </div>
             <div class="footer-col">
                 <h4>KONTAK</h4>
-                <ul><li><i class="fas fa-envelope"></i> support@glisia.id</li><li><i class="fas fa-phone"></i> (021) 555-0123</li><li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li></ul>
+                <ul><li><i class="fas fa-envelope"></i> support@glisia.id</li><li><i class="fas fa-phone"></i> 0813-8424-1171</li><li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li></ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -284,7 +313,6 @@
         </div>
     </div>
 
-    <!-- Gunakan file konsultasi.js versi terbaru yang sudah tidak mengandung skor -->
     <script src="js/konsultasi.js"></script>
 </body>
 

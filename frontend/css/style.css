@@ -115,26 +115,32 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1E88E5;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 55px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1E88E5;
+    line-height: 1;
 }
 
 .badge-expert {
-    font-size: 0.7rem;
-    background: #E3F2FD;
-    padding: 2px 8px;
-    border-radius: 30px;
-    color: #1565C0;
-    font-weight: 500;
+    display: none; /* badge disembunyikan sepenuhnya */
 }
 
 .nav {
@@ -153,14 +159,12 @@ h2 {
     color: #1E88E5;
 }
 
-/* PERBAIKAN UTAMA: jarak antar tombol di header dibuat lebih lega */
 .header__actions {
     display: flex;
     align-items: center;
-    gap: 20px; /* dari 12px menjadi 20px */
+    gap: 20px;
 }
 
-/* Tambahan agar guest menu dan user menu align center */
 #guestMenu, #userMenu {
     display: flex;
     align-items: center;
@@ -236,7 +240,7 @@ h2 {
     border-radius: 6px;
 }
 
-/* Sugar Tracker Components */
+/* Tracker Components */
 .tracker-header {
     display: flex;
     justify-content: space-between;
@@ -307,82 +311,47 @@ h2 {
     cursor: pointer;
 }
 
-.sugar-tracker-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* Quick Add Section */
+.quick-add-section {
+    margin: 16px 0;
 }
-.sugar-tracker-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px;
+.quick-add-section h4 {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: #1E293B;
+}
+.quick-add-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+.quick-add-btn {
     background: #F8FAFE;
-    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    border-radius: 40px;
+    padding: 8px 6px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: all 0.2s;
-}
-.sugar-tracker-item:hover {
-    background: #EEF4FC;
-    transform: translateX(4px);
-}
-.item-icon {
-    width: 48px;
-    height: 48px;
-    background: white;
-    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    gap: 6px;
+    color: #1E293B;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.quick-add-btn:hover {
+    background: #E3F2FD;
+    border-color: #1E88E5;
+    transform: translateY(-2px);
+}
+.quick-add-btn i {
     color: #1E88E5;
-}
-.item-info {
-    flex: 1;
-    margin-left: 12px;
-}
-.item-info strong {
-    display: block;
-    font-size: 1rem;
-    margin-bottom: 2px;
-}
-.item-info > span {
     font-size: 0.75rem;
-    color: #64748B;
-}
-.sugar-detail {
-    margin-top: 4px;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-.sdt-value {
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: #E53935;
-}
-.gula-tambahan {
-    background: #FEF3C7;
-    color: #D97706;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-.btn-add-quick {
-    background: #1E88E5;
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-add-quick:hover {
-    background: #1565C0;
-    transform: scale(1.02);
 }
 
 /* Daily Log */
@@ -443,88 +412,6 @@ h2 {
     padding: 16px;
     color: #94A3B8;
     font-size: 0.8rem;
-}
-
-/* Evidence Panel */
-.evidence-panel {
-    background: #F1F5F9;
-    border-radius: 16px;
-    padding: 12px;
-    margin-top: 16px;
-}
-.evidence-panel p {
-    margin: 6px 0;
-    font-size: 0.75rem;
-}
-.rule-hint {
-    margin-top: 8px;
-    padding: 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-}
-.tracker-note {
-    margin-top: 20px;
-    font-size: 0.75rem;
-    color: #64748B;
-    text-align: center;
-    font-style: italic;
-    background: #F1F5F9;
-    padding: 8px;
-    border-radius: 16px;
-}
-
-/* Quick Add Section */
-.quick-add-section {
-    margin: 16px 0;
-}
-.quick-add-section h4 {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    color: #1E293B;
-}
-.quick-add-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
-    margin-top: 8px;
-}
-.quick-add-btn {
-    background: #F8FAFE;
-    border: 1px solid #E2E8F0;
-    border-radius: 40px;
-    padding: 8px 6px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    color: #1E293B;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.quick-add-btn:hover {
-    background: #E3F2FD;
-    border-color: #1E88E5;
-    transform: translateY(-2px);
-}
-.quick-add-btn i {
-    color: #1E88E5;
-    font-size: 0.75rem;
-}
-@media (max-width: 480px) {
-    .quick-add-buttons {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    .quick-add-btn {
-        white-space: normal;
-        font-size: 0.65rem;
-        padding: 6px 4px;
-    }
 }
 
 /* Weekly Trend */
@@ -601,26 +488,35 @@ h2 {
     line-height: 1.4;
 }
 
-/* Weather Widget (optional) */
-.weather-widget {
-    position: absolute;
-    top: -20px;
-    right: 0;
-    background: white;
-    padding: 8px 16px;
-    border-radius: 60px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    font-size: 0.9rem;
+/* Evidence Panel */
+.evidence-panel {
+    background: #F1F5F9;
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 16px;
 }
-.weather-widget i {
-    color: #FFB300;
-    font-size: 1.2rem;
+.evidence-panel p {
+    margin: 6px 0;
+    font-size: 0.75rem;
+}
+.rule-hint {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+.tracker-note {
+    margin-top: 20px;
+    font-size: 0.75rem;
+    color: #64748B;
+    text-align: center;
+    font-style: italic;
+    background: #F1F5F9;
+    padding: 8px;
+    border-radius: 16px;
 }
 
-/* ===== VISUALISASI ===== */
+/* Visualisasi */
 .section {
     padding: 64px 0;
 }
@@ -648,7 +544,7 @@ h2 {
     border-radius: 16px;
     margin-bottom: 16px;
 }
-.sugar-bar {
+.calorie-bar {
     height: 28px;
     background: #FFE0B2;
     border-radius: 30px;
@@ -662,7 +558,7 @@ h2 {
     text-align: left;
 }
 
-/* ===== WHY SECTION ===== */
+/* Why Section */
 .why-section {
     background: #FFFFFF;
 }
@@ -714,7 +610,7 @@ h2 {
     margin-bottom: 12px;
 }
 
-/* ===== HOW IT WORKS ===== */
+/* How It Works */
 .how-section {
     background: #F0F9FF;
 }
@@ -757,7 +653,6 @@ h2 {
     color: #1E88E5;
     opacity: 0.6;
 }
-/* Rule Section */
 .rule-section {
     margin-top: 32px;
     background: white;
@@ -848,7 +743,7 @@ h2 {
     margin-top: 6px;
 }
 
-/* ===== CTA BLOCK ===== */
+/* CTA Block */
 .cta-block {
     background: linear-gradient(90deg, #1E88E5, #1565C0);
     border-radius: 32px;
@@ -872,7 +767,7 @@ h2 {
     gap: 16px;
 }
 
-/* ===== FOOTER ===== */
+/* Footer */
 .footer {
     background: #0F1724;
     color: #94A3B8;
@@ -903,7 +798,7 @@ h2 {
     font-size: 0.8rem;
 }
 
-/* ===== MODALS ===== */
+/* Modals */
 .modal {
     display: none;
     position: fixed;
@@ -979,7 +874,7 @@ h2 {
     border-bottom: 1px solid #E2E8F0;
 }
 
-/* ===== USER DROPDOWN ===== */
+/* User Dropdown */
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -1021,7 +916,7 @@ h2 {
     display: block;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE BREAKPOINTS ===== */
 @media (max-width: 1024px) {
     .hero-grid {
         flex-direction: column;
@@ -1036,6 +931,7 @@ h2 {
         transform: rotate(90deg);
     }
 }
+
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
@@ -1046,10 +942,8 @@ h2 {
     .vis-grid {
         grid-template-columns: 1fr;
     }
-    .header__inner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    /* Hapus flex-direction column pada header di 768px agar tidak konflik dengan 640px */
+    /* Biarkan header tetap row, nanti di 640px kita atur wrap */
     .nav {
         flex-wrap: wrap;
         gap: 16px;
@@ -1061,8 +955,159 @@ h2 {
     .why-cards {
         flex-direction: column;
     }
-    .header__actions {
+    /* Jangan ubah header__inner di sini */
+}
+
+/* KHUSUS UNTUK HP (640px ke bawah) - Logo kiri, tombol kanan, nav di bawah */
+@media (max-width: 640px) {
+    .header__inner {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        order: 1;
+        flex-shrink: 1;
+    }
+    .logo-img {
+        height: 40px;
+    }
+    .logo-text {
+        font-size: 1.4rem;
+    }
+    .nav {
+        order: 3;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
+        margin-top: 12px;
+    }
+    .header__actions {
+        order: 2;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    .header__actions .btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+    }
+    .hero__cta {
+        flex-direction: column;
+    }
+    .hero__cta .btn {
+        justify-content: center;
+    }
+    .hero__content h1 {
+        font-size: 1.8rem;
+    }
+    .cta-block {
+        padding: 28px 20px;
+        text-align: center;
+    }
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .cta-buttons .btn {
+        justify-content: center;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10% auto;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .user-dropdown .dropdown-content {
+        right: auto;
+        left: 0;
+    }
+    .weekly-trend .trend-item {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .trend-label {
+        width: auto;
+        min-width: 40px;
+    }
+    .trend-value {
+        width: auto;
+    }
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+    .footer-col ul {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    .container {
+        padding: 0 16px;
+    }
+    .hero__card {
+        padding: 16px;
+        max-height: 600px;
+    }
+    .tracker-header h3 {
+        font-size: 1.2rem;
+    }
+    .risk-badge {
+        font-size: 0.65rem;
+        padding: 2px 10px;
+    }
+    .quick-add-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .quick-add-btn {
+        font-size: 0.65rem;
+        padding: 6px 4px;
+        white-space: normal;
+    }
+    .daily-log-list {
+        max-height: 180px;
+    }
+    .log-item {
+        font-size: 0.75rem;
+    }
+    .evidence-panel p {
+        font-size: 0.7rem;
+    }
+    .btn-large {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .rule-example-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .rule-icon {
+        width: 40px;
+        height: 40px;
+    }
+    .rule-content code {
+        font-size: 0.7rem;
+        word-break: break-all;
+    }
+    .section {
+        padding: 40px 0;
+    }
+    .hero-section {
+        padding: 30px 0;
     }
 }

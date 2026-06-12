@@ -7,6 +7,106 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/auth.css">
+    <style>
+        /* Tambahan lokal untuk memastikan checkbox rapi */
+        .checkbox-group {
+            margin: 1.2rem 0;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            color: #1E293B;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .link-doc {
+            color: #1E88E5;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .link-doc:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .checkbox-label {
+                font-size: 0.8rem;
+            }
+            .checkbox-label input {
+                width: 16px;
+                height: 16px;
+                margin-top: 2px;
+            }
+        }
+
+        /* Modal Style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 24px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .modal-header h3 {
+            font-size: 1.3rem;
+            color: #1E88E5;
+            margin: 0;
+        }
+        .close-modal {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: 0.2s;
+        }
+        .close-modal:hover {
+            color: #E53935;
+        }
+        .modal-body {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #1E293B;
+        }
+        .modal-body h4 {
+            margin-top: 20px;
+            color: #1E88E5;
+        }
+        .modal-body p {
+            margin-bottom: 12px;
+        }
+    </style>
 </head>
 <body>
     <div class="auth-container">
@@ -26,20 +126,36 @@
                     <label><i class="fas fa-envelope"></i> Email</label>
                     <input type="email" id="email" placeholder="nama@email.com" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label><i class="fas fa-lock"></i> Kata Sandi</label>
-                    <input type="password" id="password" placeholder="Buat kata sandi" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Buat kata sandi" required>
+                        <i class="fas fa-eye toggle-password" data-target="password"></i>
+                    </div>
                     <small>Gunakan minimal 8 karakter dengan kombinasi angka dan simbol.</small>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label><i class="fas fa-lock"></i> Konfirmasi Kata Sandi</label>
-                    <input type="password" id="confirmPassword" placeholder="Ulangi kata sandi" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" placeholder="Ulangi kata sandi" required>
+                        <i class="fas fa-eye toggle-password" data-target="confirmPassword"></i>
+                    </div>
                 </div>
+                
+                <!-- CHECKBOX dengan link dokumen -->
                 <div class="form-group checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" id="agreeTerms" required> Saya menyetujui <strong>Syarat & Ketentuan serta Kebijakan Privasi GLISIA</strong> yang berlaku.
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>
+                            Saya menyetujui 
+                            <span class="link-doc" id="tncLink">Syarat & Ketentuan</span> 
+                            serta 
+                            <span class="link-doc" id="privacyLink">Kebijakan Privasi GLISIA</span> 
+                            yang berlaku.
+                        </span>
                     </label>
                 </div>
+                
                 <button type="submit" class="btn-login">Daftar Sekarang</button>
                 <div class="auth-footer">
                     Sudah punya akun? <a href="login.html">Masuk di sini</a>
@@ -51,6 +167,76 @@
             <div id="registerMessage" class="auth-message"></div>
         </div>
     </div>
+
+    <!-- Modal Syarat & Ketentuan -->
+    <div id="tncModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Syarat & Ketentuan GLISIA</h3>
+                <span class="close-modal" data-modal="tncModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>1. Penerimaan Syarat</strong><br>Dengan menggunakan layanan GLISIA, Anda menyetujui seluruh syarat dan ketentuan yang berlaku.</p>
+                <p><strong>2. Penggunaan Layanan</strong><br>GLISIA hanya untuk keperluan informasi kesehatan dan edukasi. Hasil analisis tidak menggantikan diagnosis medis profesional.</p>
+                <p><strong>3. Akun Pengguna</strong><br>Anda bertanggung jawab penuh atas kerahasiaan akun dan password Anda.</p>
+                <p><strong>4. Pembatasan Tanggung Jawab</strong><br>GLISIA tidak bertanggung jawab atas kerugian yang timbul dari penggunaan informasi di platform ini.</p>
+                <p><strong>5. Perubahan Syarat</strong><br>Kami berhak mengubah syarat ini sewaktu-waktu. Perubahan akan diumumkan melalui situs.</p>
+                <p><em>Terakhir diperbarui: 11 Juni 2026</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kebijakan Privasi -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Kebijakan Privasi GLISIA</h3>
+                <span class="close-modal" data-modal="privacyModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Informasi yang Dikumpulkan</strong><br>Kami mengumpulkan data pribadi seperti nama, email, data kesehatan (berat badan, tinggi, usia, asupan makanan, aktivitas fisik).</p>
+                <p><strong>Penggunaan Data</strong><br>Data digunakan untuk memberikan hasil analisis, rekomendasi kesehatan, dan meningkatkan layanan kami.</p>
+                <p><strong>Keamanan Data</strong><br>Data Anda dienkripsi dan disimpan dengan standar keamanan tinggi. Kami tidak akan menjual data Anda kepada pihak ketiga.</p>
+                <p><strong>Hak Anda</strong><br>Anda dapat mengakses, mengoreksi, atau meminta penghapusan data dengan menghubungi support@glisia.id.</p>
+                <p><strong>Cookies</strong><br>Kami menggunakan cookies untuk meningkatkan pengalaman pengguna.</p>
+                <p><em>Terakhir diperbarui: 11 Juni 2026</em></p>
+            </div>
+        </div>
+    </div>
+
     <script src="js/auth.js"></script>
+    <script>
+        // Fungsi untuk membuka modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        // Tutup modal ketika tombol close diklik
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal');
+                document.getElementById(modalId).style.display = 'none';
+            });
+        });
+
+        // Tutup modal jika klik di luar area konten
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+
+        // Event listener untuk link Syarat & Ketentuan
+        document.getElementById('tncLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal('tncModal');
+        });
+
+        // Event listener untuk link Kebijakan Privasi
+        document.getElementById('privacyLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal('privacyModal');
+        });
+    </script>
 </body>
 </html>

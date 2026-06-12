@@ -83,13 +83,14 @@ def get_tdee(weight_kg, height_cm, usia, jenis_kelamin, activity_minutes, intens
 
 @analyze_bp.route('/api/analyze', methods=['POST'])
 def analyze():
-    # Autentikasi
+    # Token OPSIONAL (guest diperbolehkan)
     token = request.headers.get('Authorization', '').replace('Bearer ', '')
-    if not token:
-        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
-    user_id = get_user_id_from_token(token)
-    if not user_id:
-        return jsonify({'status': 'error', 'message': 'Invalid token'}), 401
+    user_id = None
+    if token:
+        user_id = get_user_id_from_token(token)
+        if not user_id:
+            return jsonify({'status': 'error', 'message': 'Invalid token'}), 401
+    # Guest: user_id tetap None
 
     data = request.get_json()
     if not data:
@@ -114,7 +115,7 @@ def analyze():
         total_karbohidrat = float(data['total_karbohidrat_harian'])
         aktivitas_menit = int(data['aktivitas_menit_per_minggu'])
         intensitas = data['intensitas_aktivitas'].lower()
-        selected_activities = data.get('selected_activities', [])  # opsional, tidak digunakan
+        selected_activities = data.get('selected_activities', [])
 
         # Validasi
         if any(x <= 0 for x in [weight, height, usia, total_kalori, total_lemak, total_karbohidrat, aktivitas_menit]):
@@ -150,7 +151,7 @@ def analyze():
         # Jalankan inferensi
         inference_result = inference_engine.infer(facts)
 
-        # Susun hasil (tanpa skor numerik)
+        # Susun hasil
         result = {
             "tdee": tdee,
             "bmi": bmi,
@@ -163,31 +164,33 @@ def analyze():
             "categories": facts
         }
 
-        # Simpan ke database
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('''
-            INSERT INTO hasil_analisis 
-            (user_id, weight_kg, height_cm, usia, jenis_kelamin,
-             total_kalori_harian, total_lemak_harian, total_karbohidrat_harian,
-             aktivitas_menit_per_minggu, intensitas_aktivitas, tdee,
-             risk_level, explanation, recommendations, education_material, trace)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ''', (
-            user_id,
-            weight, height, usia, jenis_kelamin,
-            total_kalori, total_lemak, total_karbohidrat,
-            aktivitas_menit, intensitas,
-            tdee,
-            result["risk_level"],
-            result["explanation"],
-            json.dumps(result["recommendations"]),
-            result["education_material"],
-            json.dumps(result["trace"])
-        ))
-        conn.commit()
-        cursor.close()
-        conn.close()
+        # Simpan ke database HANYA jika user_id valid (bukan guest)
+        if user_id:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO hasil_analisis 
+                (user_id, weight_kg, height_cm, usia, jenis_kelamin,
+                 total_kalori_harian, total_lemak_harian, total_karbohidrat_harian,
+                 aktivitas_menit_per_minggu, intensitas_aktivitas, tdee,
+                 risk_level, explanation, recommendations, education_material, trace)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ''', (
+                user_id,
+                weight, height, usia, jenis_kelamin,
+                total_kalori, total_lemak, total_karbohidrat,
+                aktivitas_menit, intensitas,
+                tdee,
+                result["risk_level"],
+                result["explanation"],
+                json.dumps(result["recommendations"]),
+                result["education_material"],
+                json.dumps(result["trace"])
+            ))
+            conn.commit()
+            cursor.close()
+            conn.close()
+        # Guest: tidak disimpan
 
         return jsonify({
             'status': 'success',

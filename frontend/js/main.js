@@ -18,10 +18,8 @@ function showGuestMenu() {
     if (guestMenu) guestMenu.style.display = 'flex';
     if (userMenu) userMenu.style.display = 'none';
     
-    // Pastikan tombol konsultasi untuk guest tampil (jika ada)
     const btnGuest = document.getElementById('btnMulaiKonsultasiGuest');
     if (btnGuest) btnGuest.style.display = 'inline-flex';
-    // Sembunyikan tombol konsultasi user (agar tidak muncul di guest)
     const btnUser = document.getElementById('btnMulaiKonsultasi');
     if (btnUser) btnUser.style.display = 'none';
 }
@@ -43,7 +41,6 @@ function showUserMenu() {
         adminLink.style.display = 'none';
     }
     
-    // **PERBAIKAN UTAMA: sembunyikan tombol "Mulai Konsultasi" di header setelah login**
     const btnUserConsul = document.getElementById('btnMulaiKonsultasi');
     if (btnUserConsul) btnUserConsul.style.display = 'none';
 }

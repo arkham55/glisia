@@ -1,6 +1,20 @@
 const API_BASE = "http://localhost:5002/api/auth";
 
-// Login
+// ========== FITUR LIHAT PASSWORD ==========
+document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (input) {
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            // Ganti ikon antara mata terbuka dan tertutup
+            this.classList.toggle('fa-eye-slash');
+        }
+    });
+});
+
+// ========== LOGIN ==========
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
@@ -29,7 +43,6 @@ if (loginForm) {
                 messageDiv.style.display = 'block';
                 setTimeout(() => {
                     if (data.user.role === 'admin') {
-                        // ✅ Arahkan ke dashboard admin, bukan edukasi
                         window.location.href = 'admin/dashboard.html';
                     } else {
                         window.location.href = 'index.html';
@@ -48,7 +61,7 @@ if (loginForm) {
     });
 }
 
-// Register
+// ========== REGISTER ==========
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
@@ -109,7 +122,7 @@ if (registerForm) {
     });
 }
 
-// Cek admin (untuk admin panel)
+// ========== CEK AKSES ADMIN ==========
 async function checkAdminAccess() {
     const token = localStorage.getItem('glisia_token');
     if (!token) {
